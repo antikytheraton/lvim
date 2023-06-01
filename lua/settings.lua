@@ -21,6 +21,16 @@ vim.cmd(
   [[ au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]]
 )
 
+-- Autom. read file when changed outside of Vim
+vim.o.autoread = true
+vim.cmd(
+  [[ au FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif ]]
+)
+vim.cmd(
+  [[ au FileChangedShellPost *
+    \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None ]]
+)
+
 -- Enable wrap
 vim.o.wrap = true
 
@@ -61,9 +71,6 @@ vim.o.smartcase = true
 -- Number of command-lines that are remembered
 vim.o.history = 10000
 
--- Autom. read file when changed outside of Vim
-vim.o.autoread = true
-
 -- Autom. save file before some action
 vim.o.autowrite = true
 
@@ -81,19 +88,18 @@ local Path = require("plenary.path")
 
 local swapdir = Path:new(Path.path.home .. "/.cache/nvim/swap/")
 if not swapdir:exists() then
-    swapdir:mkdir()
+  swapdir:mkdir()
 end
 vim.o.directory = tostring(swapdir)
 
 local backupdir = Path:new(Path.path.home .. "/.cache/nvim/backup/")
 if not backupdir:exists() then
-    backupdir:mkdir()
+  backupdir:mkdir()
 end
 vim.o.backupdir = tostring(backupdir)
 
 local undodir = Path:new(Path.path.home .. "/.cache/nvim/undo/")
 if not undodir:exists() then
-    undodir:mkdir()
+  undodir:mkdir()
 end
 vim.o.undodir = tostring(undodir)
-

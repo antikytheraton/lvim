@@ -9,10 +9,14 @@ lvim.builtin.nvimtree.active = false -- NOTE: using NNN
 lvim.builtin.which_key.mappings["e"] = { "<cmd>NnnPicker %:p:h<CR>", "Explorer" }
 lvim.builtin.which_key.mappings["|"] = { "<cmd>vsp<cr>", "Window vertical split" }
 lvim.builtin.which_key.mappings["-"] = { "<cmd>sp<cr>", "Window horizontal split" }
+lvim.builtin.which_key.mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
+lvim.builtin.which_key.mappings["c"] = { "<cmd>Telescope neoclip<CR>", "Clipboard manager" }
 
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
+-- Telescope select files
+map("n", "<C-p>", "<cmd>Telescope find_files<cr>", opts)
 -- clear any highlights when <esc> is pressed
 map("n", "<Esc>", ":noh<CR>", opts)
 -- move one up/down display line instead of physicial line

@@ -50,6 +50,7 @@ lvim.plugins = {
       })
     end,
   },
+  -- clipboard management
   {
     "AckslD/nvim-neoclip.lua",
     dependencies = {
@@ -58,5 +59,7 @@ lvim.plugins = {
     config = function()
       require("neoclip").setup()
     end,
-  }
+  },
+  -- python formatting
+  { "psf/black" },
 }

@@ -31,6 +31,11 @@ vim.cmd(
     \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None ]]
 )
 
+-- autoformat python projects with black
+vim.cmd(
+  [[autocmd BufWritePre *.py Black ]]
+)
+
 -- Enable wrap
 vim.o.wrap = true
 

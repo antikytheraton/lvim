@@ -11,6 +11,15 @@ lvim.builtin.which_key.mappings["|"] = { "<cmd>vsp<cr>", "Window vertical split"
 lvim.builtin.which_key.mappings["-"] = { "<cmd>sp<cr>", "Window horizontal split" }
 lvim.builtin.which_key.mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 lvim.builtin.which_key.mappings["c"] = { "<cmd>Telescope neoclip<CR>", "Clipboard manager" }
+lvim.builtin.which_key.mappings["t"] = {
+	name = "Diagnostics",
+	t = { "<cmd>TroubleToggle<cr>", "trouble" },
+	w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
+	d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
+	q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+	l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+	r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+}
 
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }

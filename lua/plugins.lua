@@ -72,6 +72,8 @@ lvim.plugins = {
 			vim.g.gitblame_enabled = 0
 		end,
 	},
+	-- Move like a spider
+	{ "chrisgrieser/nvim-spider", lazy = true },
 }
 
 ------------------------------------------------------

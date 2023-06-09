@@ -63,6 +63,15 @@ lvim.plugins = {
 	},
 	-- Diagnostics, references, telescope results, quick fix and location lists
 	{ "folke/trouble.nvim", cmd = "TroubleToggle" },
+	-- GIT blame
+	{
+		"f-person/git-blame.nvim",
+		event = "BufRead",
+		config = function()
+			vim.cmd("highlight default link gitblame SpecialComment")
+			vim.g.gitblame_enabled = 0
+		end,
+	},
 }
 
 ------------------------------------------------------

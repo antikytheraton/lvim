@@ -37,10 +37,13 @@ map("v", "//", 'y/<C-R>"<cr>', opts)
 map("x", "<Tab>", ">gv|", opts)
 map("x", "<S-Tab>", "<gv", opts)
 -- quickfix mappings
-map("n", "[q", ":cprevious<CR>", opts)
-map("n", "]q", ":cnext<CR>", opts)
+map("n", "]q", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
+map("n", "[q", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opts)
 map("n", "]Q", ":clast<CR>", opts)
 map("n", "[Q", ":cfirst<CR>", opts)
+-- git mappings
+map("n", "]c", "<cmd>lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>", opts)
+map("n", "[c", "<cmd>lua require 'gitsigns'.prev_hunk({navigation_message = false})<cr>", opts)
 -- Stay centered jumping between search results
 map("n", "n", "nzzzv", opts)
 map("n", "N", "Nzzzv", opts)

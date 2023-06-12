@@ -74,6 +74,8 @@ lvim.plugins = {
 	},
 	-- Move like a spider
 	{ "chrisgrieser/nvim-spider", lazy = true },
+	-- Glow Markdown preview
+	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 }
 
 ------------------------------------------------------

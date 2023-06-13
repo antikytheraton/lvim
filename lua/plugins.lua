@@ -104,6 +104,8 @@ lvim.plugins = {
 			require("config.neotest").setup()
 		end,
 	},
+	-- Load dotenv file variables
+	{ "tpope/vim-dotenv" },
 }
 
 ------------------------------------------------------

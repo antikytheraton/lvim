@@ -2,7 +2,7 @@
 -- Settings
 ------------------------------------------------------
 lvim.leader = ","
-lvim.transparent_window = true
+lvim.transparent_window = false
 -- Python base dependencies
 vim.g.python3_host_prog = "~/.pyenv/versions/py3nvim/bin/python"
 

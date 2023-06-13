@@ -11,14 +11,24 @@ lvim.builtin.which_key.mappings["|"] = { "<cmd>vsp<cr>", "Window vertical split"
 lvim.builtin.which_key.mappings["-"] = { "<cmd>sp<cr>", "Window horizontal split" }
 lvim.builtin.which_key.mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 lvim.builtin.which_key.mappings["c"] = { "<cmd>Telescope neoclip star<CR>", "Clipboard manager" }
+-- lvim.builtin.which_key.mappings["t"] = {
+-- 	name = "Diagnostics",
+-- 	t = { "<cmd>TroubleToggle<cr>", "trouble" },
+-- 	w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
+-- 	d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
+-- 	q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+-- 	l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+-- 	r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+-- }
+
 lvim.builtin.which_key.mappings["t"] = {
-	name = "Diagnostics",
-	t = { "<cmd>TroubleToggle<cr>", "trouble" },
-	w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
-	d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
-	q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
-	l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
-	r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+	name = "Test",
+	["r"] = { '<cmd>lua require("neotest").run.run(vim.fn.getcwd())<CR>', "Run tests" },
+	["n"] = { '<cmd>lua require("neotest").run.run()<CR>', "Run nearest test" },
+	["d"] = { '<cmd>lua require("neotest").run.run({strategy = "dap"})<CR>', "Debug nearest test" },
+	["s"] = { '<cmd>lua require("neotest").run.stop()<CR>', "Stop test" },
+	["t"] = { '<cmd>lua require("neotest").summary.toggle()<CR>', "Toggle summary" },
+	["a"] = { '<cmd>lua require("neotest").run.attach()<CR>', "Test attach" },
 }
 
 local map = vim.api.nvim_set_keymap

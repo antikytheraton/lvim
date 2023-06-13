@@ -28,12 +28,13 @@ lvim.plugins = {
 	-- Wakatime
 	{ "wakatime/vim-wakatime" },
 	-- -- LSP fidget
-	-- {
-	-- 	"j-hui/fidget.nvim",
-	-- 	config = function()
-	-- 		require("fidget").setup()
-	-- 	end,
-	-- },
+	{
+		"j-hui/fidget.nvim",
+		version = "legacy",
+		config = function()
+			require("fidget").setup()
+		end,
+	},
 	-- File explorer
 	{
 		"luukvbaal/nnn.nvim",
@@ -76,8 +77,8 @@ lvim.plugins = {
 	{ "chrisgrieser/nvim-spider", lazy = true },
 	-- Glow Markdown preview
 	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
-	-- Emoji on cmp
-	{ "hrsh7th/cmp-emoji" },
+	-- -- Emoji on cmp
+	-- { "hrsh7th/cmp-emoji" },
 	-- Minimap
 	{
 		"wfxr/minimap.vim",
@@ -87,6 +88,20 @@ lvim.plugins = {
 			vim.cmd("let g:minimap_width = 10")
 			vim.cmd("let g:minimap_auto_start = 1")
 			vim.cmd("let g:minimap_auto_start_win_enter = 1")
+		end,
+	},
+	-- Tests
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-neotest/neotest-go",
+			"nvim-neotest/neotest-python",
+		},
+		config = function()
+			require("config.neotest").setup()
 		end,
 	},
 }

@@ -27,13 +27,13 @@ lvim.plugins = {
 	{ "pbrisbin/vim-mkdir" },
 	-- Wakatime
 	{ "wakatime/vim-wakatime" },
-	-- LSP fidget
-	{
-		"j-hui/fidget.nvim",
-		config = function()
-			require("fidget").setup()
-		end,
-	},
+	-- -- LSP fidget
+	-- {
+	-- 	"j-hui/fidget.nvim",
+	-- 	config = function()
+	-- 		require("fidget").setup()
+	-- 	end,
+	-- },
 	-- File explorer
 	{
 		"luukvbaal/nnn.nvim",

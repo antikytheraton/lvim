@@ -29,6 +29,7 @@ lvim.builtin.which_key.mappings["t"] = {
 	["s"] = { '<cmd>lua require("neotest").run.stop()<CR>', "Stop test" },
 	["t"] = { '<cmd>lua require("neotest").summary.toggle()<CR>', "Toggle summary" },
 	["a"] = { '<cmd>lua require("neotest").run.attach()<CR>', "Test attach" },
+	["o"] = { "<cmd>Neotest output<CR>", "Show test output" },
 }
 
 local map = vim.api.nvim_set_keymap
@@ -61,7 +62,7 @@ map("n", "N", "Nzzzv", opts)
 map("n", "J", "mzJ`z", opts)
 
 -- Spider keymaps overides
-vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
-vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
-vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
-vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
+vim.keymap.set({ "n", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
+vim.keymap.set({ "n", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
+vim.keymap.set({ "n", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
+vim.keymap.set({ "n", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })

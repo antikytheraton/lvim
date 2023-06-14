@@ -42,15 +42,6 @@ lvim.plugins = {
 			require("config.nnn").setup()
 		end,
 	},
-	-- autosession
-	{
-		"rmagatti/auto-session",
-		config = function()
-			require("auto-session").setup({
-				log_level = "error",
-			})
-		end,
-	},
 	-- clipboard management
 	{
 		"AckslD/nvim-neoclip.lua",
@@ -111,6 +102,41 @@ lvim.plugins = {
 		"windwp/nvim-ts-autotag",
 		config = function()
 			require("nvim-ts-autotag").setup()
+		end,
+	},
+	-- LSP signature
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "BufRead",
+		config = function()
+			require("lsp_signature").on_attach({
+				floating_window = false,
+				hint_prefix = "🐼 ",
+			})
+		end,
+	},
+	-- TODO: comments
+	-- NOTE: hightlights comments on code
+	-- BUG: error XD
+	-- HACK: hack code
+	-- PERF: to improve later
+	{
+		"folke/todo-comments.nvim",
+		event = "BufRead",
+		config = function()
+			require("todo-comments").setup()
+		end,
+	},
+	-- autosession
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		lazy = true,
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		config = function()
+			require("config.persistence").setup()
 		end,
 	},
 }

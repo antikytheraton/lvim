@@ -31,6 +31,12 @@ lvim.builtin.which_key.mappings["t"] = {
 	["a"] = { '<cmd>lua require("neotest").run.attach()<CR>', "Test attach" },
 	["o"] = { "<cmd>Neotest output<CR>", "Show test output" },
 }
+lvim.builtin.which_key.mappings["S"] = {
+	name = "Session",
+	c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+	l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+	Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
+}
 
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }

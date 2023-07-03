@@ -2,10 +2,11 @@
 -- LSP Formatters and Linters
 ------------------------------------------------------
 
-lvim.format_on_save.enabled = true
+lvim.format_on_save.enabled = false
 
 local formatters = require("lvim.lsp.null-ls.formatters")
 local linters = require("lvim.lsp.null-ls.linters")
+local code_actions = require("lvim.lsp.null-ls.code_actions")
 
 linters.setup({
 	-- { exe = "mypy", filetypes = { "python" } },
@@ -14,6 +15,12 @@ linters.setup({
 	{ exe = "flake8", filetypes = { "python" } },
 	{ exe = "pyproject_flake8", filetypes = { "python" } },
 	{ exe = "golangci-lint", filetypes = { "go" } },
+	{ name = "codespell" },
+	{ name = "terraform_validate" },
+})
+
+code_actions.setup({
+	{ name = "proselint" },
 })
 
 formatters.setup({

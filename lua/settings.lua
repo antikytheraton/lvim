@@ -3,8 +3,13 @@
 ------------------------------------------------------
 lvim.leader = ","
 lvim.transparent_window = false
+lvim.colorscheme = "tokyonight-moon"
 -- Python base dependencies
 vim.g.python3_host_prog = "~/.pyenv/versions/py3nvim/bin/python"
+-- Folding
+vim.o.foldenable = false
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line

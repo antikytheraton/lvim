@@ -43,13 +43,13 @@ mappings["S"] = {
 mappings["gS"] = { '<cmd>lua require"gitsigns".stage_buffer()<cr>', "Stage Buffer" }
 -- Trouble
 mappings["lt"] = {
-  name = "Trouble",
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+	name = "Trouble",
+	r = { "<cmd>Trouble lsp_references<cr>", "References" },
+	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+	d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+	w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
 }
 -- Buffers
 mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
@@ -104,3 +104,23 @@ vim.keymap.set({ "n", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", 
 vim.keymap.set({ "n", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
 vim.keymap.set({ "n", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
 vim.keymap.set({ "n", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
+
+-- LSP callback keymaps
+lvim.lsp.on_attach_callback = function(client, bufrn)
+	-- local function buf_set_option(...)
+	-- 	vim.api.nvim_buf_set_option(bufrn, ...)
+	-- end
+	-- buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+
+	local function buf_set_keymap(...)
+		vim.api.nvim_buf_set_keymap(bufrn, ...)
+	end
+
+	buf_set_keymap("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+
+	if client.server_capabilities.document_formatting then
+		buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+	elseif client.server_capabilities.document_range_formatting then
+		buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+	end
+end

@@ -9,7 +9,6 @@ local linters = require("lvim.lsp.null-ls.linters")
 local code_actions = require("lvim.lsp.null-ls.code_actions")
 -- local completion = require("lvim.lsp.null-ls.completion")
 
-
 linters.setup({
 	-- { exe = "mypy", filetypes = { "python" } },
 	{ exe = "ruff", filetypes = { "python" } },
@@ -19,6 +18,9 @@ linters.setup({
 	{ exe = "golangci-lint", filetypes = { "go" } },
 	{ name = "codespell" },
 	{ name = "terraform_validate" },
+	{ name = "curlylint" },
+	-- { name = "selene" },
+	{ name = "shellcheck", args = { "--severity", "info" } },
 })
 
 code_actions.setup({
@@ -42,7 +44,7 @@ formatters.setup({
 	{ exe = "ruff", filetypes = { "python" } },
 	-- { exe = "isort", filetypes = { "python" } },
 	{ exe = "reorder_python_imports", filetypes = { "python" } },
-	{ exe = "djlint", filetypes = { "django", "jinja.html", "htmldjango" } },
+	-- { exe = "djlint", filetypes = { "django", "jinja.html", "htmldjango" } },
 	-- { exe = "djhtml", filetypes = { "django", "jinja.html", "htmldjango" } },
 
 	{ exe = "goimports", filetypes = { "go" } },

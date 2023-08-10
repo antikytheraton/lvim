@@ -3,9 +3,11 @@
 ------------------------------------------------------
 lvim.leader = ","
 lvim.transparent_window = false
-lvim.colorscheme = "tokyonight-moon"
+lvim.colorscheme = "tokyonight-storm"
 -- Python base dependencies
 vim.g.python3_host_prog = "~/.pyenv/versions/py3nvim/bin/python"
+-- format timeout
+lvim.lsp.null_ls.setup.timeout_ms = 100000
 -- Folding
 vim.o.foldenable = false
 vim.opt.foldmethod = "expr"

@@ -106,7 +106,7 @@ vim.keymap.set({ "n", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", 
 vim.keymap.set({ "n", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
 
 -- LSP callback keymaps
-lvim.lsp.on_attach_callback = function(client, bufrn)
+local on_attach = function(client, bufrn)
 	-- local function buf_set_option(...)
 	-- 	vim.api.nvim_buf_set_option(bufrn, ...)
 	-- end
@@ -124,3 +124,14 @@ lvim.lsp.on_attach_callback = function(client, bufrn)
 		buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
 	end
 end
+
+-- require("lspconfig").ruff_lsp.setup({
+-- 	on_attach = on_attach,
+-- 	init_options = {
+-- 		settings = {
+-- 			args = {},
+-- 		},
+-- 	},
+-- })
+
+lvim.lsp.on_attach_callback = on_attach

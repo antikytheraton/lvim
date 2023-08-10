@@ -44,7 +44,7 @@ lvim.plugins = {
 			require("config.nnn").setup()
 		end,
 	},
-	-- clipboard management
+	-- telescope extensions
 	{
 		"AckslD/nvim-neoclip.lua",
 		dependencies = {
@@ -54,6 +54,16 @@ lvim.plugins = {
 		config = function()
 			require("neoclip").setup()
 		end,
+	},
+	{
+		"nvim-telescope/telescope-frecency.nvim",
+		config = function()
+			require("telescope").load_extension("frecency")
+		end,
+		dependencies = {
+			{ "nvim-telescope/telescope.nvim" },
+			{ "kkharji/sqlite.lua", module = "sqlite" },
+		},
 	},
 	-- Diagnostics, references, telescope results, quick fix and location lists
 	{ "folke/trouble.nvim", cmd = "TroubleToggle" },
@@ -158,6 +168,16 @@ lvim.plugins = {
 			})
 		end,
 	},
+	{
+		"ThePrimeagen/refactoring.nvim",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-treesitter/nvim-treesitter" },
+		},
+		config = function()
+			require("refactoring").setup()
+		end,
+	},
 	-- NOTE: THEMES
 	--------------------------------------------------------------------
 	{ "lunarvim/colorschemes" },
@@ -167,6 +187,11 @@ lvim.plugins = {
 	{ "marko-cerovac/material.nvim", priority = 1000 },
 	{ "ellisonleao/gruvbox.nvim", priority = 1000 },
 	{ "NTBBloodbath/doom-one.nvim", priority = 1000 },
+	{ "NLKNguyen/papercolor-theme" },
+	{ "ayu-theme/ayu-vim" },
+	{ "cocopon/iceberg.vim" },
+	{ "dikiaap/minimalist" },
+	{ "rakr/vim-one" },
 }
 
 ------------------------------------------------------

@@ -12,7 +12,7 @@ local code_actions = require("lvim.lsp.null-ls.code_actions")
 linters.setup({
 	-- { exe = "mypy", filetypes = { "python" } },
 	{ exe = "ruff", filetypes = { "python" } },
-	{ exe = "pylama", filetypes = { "python" } },
+	-- { exe = "pylama", filetypes = { "python" } },
 	-- { exe = "flake8", filetypes = { "python" } },
 	-- { exe = "pyproject_flake8", filetypes = { "python" } },
 	{ exe = "golangci-lint", filetypes = { "go" } },
@@ -21,6 +21,9 @@ linters.setup({
 	{ name = "curlylint" },
 	-- { name = "selene" },
 	{ name = "shellcheck", args = { "--severity", "info" } },
+	{ name = "checkmake" },
+	-- { name = "pydocstyle" },
+	-- { name = "vulture" },
 })
 
 code_actions.setup({
@@ -51,4 +54,5 @@ formatters.setup({
 	{ exe = "gofumpt", filetypes = { "go" } },
 
 	{ exe = "rustfmt", filetypes = { "rust" } },
+	{ name = "cmake_format" },
 })

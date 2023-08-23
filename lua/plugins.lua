@@ -38,12 +38,12 @@ lvim.plugins = {
 		},
 	},
 	-- File explorer
-	{
-		"luukvbaal/nnn.nvim",
-		config = function()
-			require("config.nnn").setup()
-		end,
-	},
+	-- {
+	-- 	"luukvbaal/nnn.nvim",
+	-- 	config = function()
+	-- 		require("config.nnn").setup()
+	-- 	end,
+	-- },
 	-- telescope extensions
 	{
 		"AckslD/nvim-neoclip.lua",

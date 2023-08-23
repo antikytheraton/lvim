@@ -5,11 +5,12 @@
 lvim.builtin.terminal.shell = "/usr/bin/env fish"
 lvim.builtin.terminal.open_mapping = [[<c-n>]]
 
-lvim.builtin.nvimtree.active = false -- NOTE: using NNN
+-- lvim.builtin.nvimtree.active = false -- NOTE: using NNN
 
 local mappings = lvim.builtin.which_key.mappings
 -- Navigation
-mappings["e"] = { "<cmd>NnnPicker %:p:h<CR>", "Explorer" }
+-- mappings["e"] = { "<cmd>NnnPicker %:p:h<CR>", "Explorer" }
+mappings["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" }
 mappings["|"] = { "<cmd>vsp<cr>", "Window vertical split" }
 mappings["-"] = { "<cmd>sp<cr>", "Window horizontal split" }
 mappings["m"] = { "<cmd>MinimapToggle<cr>", "Toggle minimap" }
@@ -97,6 +98,7 @@ map("n", "<F5>", "<cmd>require'dap'.continue<cr>", opts)
 map("n", "<F6>", "<cmd>require'dap'.step_over<cr>", opts)
 map("n", "<F7>", "<cmd>require'dap'.step_into<cr>", opts)
 map("n", "<F8>", "<cmd>require'dap'.step_out<cr>", opts)
+map("n", "mm", "<cmd>MinimapToggle<cr>", opts)
 -- format visual selection
 vim.keymap.set("v", "f", vim.lsp.buf.format)
 -- vim.keymap.set("v", "f", vim.lsp.buf.range_formatting())

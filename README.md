@@ -20,6 +20,6 @@
     - [Rust](https://www.rust-lang.org/)
     - [Python v3.9](https://www.python.org/downloads/) & [PyEnv](https://github.com/pyenv/pyenv)
     - [NodeJS +v20.2.0](https://nodejs.org/en) & [NPM](https://www.npmjs.com/)
+    - [ascii-image-converter](https://github.com/TheZoraiz/ascii-image-converter)
 
 ![my config](ss/Screenshot_20230531_100231.png)
-

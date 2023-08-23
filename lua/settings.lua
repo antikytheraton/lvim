@@ -12,6 +12,13 @@ lvim.lsp.null_ls.setup.timeout_ms = 100000
 vim.o.foldenable = false
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- enamble matchup on treesitter
+lvim.builtin.treesitter.matchup.enable = true
+-- disable bufferline plugin
+lvim.builtin.bufferline.active = false
+
+-- disable lint errors on .env files
+table.insert(lvim.lsp.automatic_configuration.skipped_filetypes,"env")
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line

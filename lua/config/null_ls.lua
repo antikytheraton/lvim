@@ -20,7 +20,7 @@ linters.setup({
 	{ name = "terraform_validate" },
 	{ name = "curlylint" },
 	-- { name = "selene" },
-	{ name = "shellcheck", args = { "--severity", "info" } },
+	{ name = "shellcheck", args = { "--severity", "info", "-e", "SC2034"} },
 	{ name = "checkmake" },
 	-- { name = "pydocstyle" },
 	-- { name = "vulture" },
@@ -29,7 +29,7 @@ linters.setup({
 code_actions.setup({
 	{ name = "proselint" },
 	{ name = "refactoring" },
-	{ name = "shellcheck" },
+	-- { name = "shellcheck" },
 })
 
 -- completion.setup({
@@ -47,7 +47,7 @@ formatters.setup({
 	{ exe = "ruff", filetypes = { "python" } },
 	-- { exe = "isort", filetypes = { "python" } },
 	{ exe = "reorder_python_imports", filetypes = { "python" } },
-	-- { exe = "djlint", filetypes = { "django", "jinja.html", "htmldjango" } },
+	{ exe = "djlint", filetypes = { "django", "jinja.html", "htmldjango" } },
 	-- { exe = "djhtml", filetypes = { "django", "jinja.html", "htmldjango" } },
 
 	{ exe = "goimports", filetypes = { "go" } },

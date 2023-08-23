@@ -12,6 +12,7 @@ local mappings = lvim.builtin.which_key.mappings
 mappings["e"] = { "<cmd>NnnPicker %:p:h<CR>", "Explorer" }
 mappings["|"] = { "<cmd>vsp<cr>", "Window vertical split" }
 mappings["-"] = { "<cmd>sp<cr>", "Window horizontal split" }
+mappings["m"] = { "<cmd>MinimapToggle<cr>", "Toggle minimap" }
 -- Telescope
 mappings["c"] = { "<cmd>Telescope neoclip star<CR>", "Clipboard manager" }
 mappings["so"] = { "<cmd>Telescope oldfiles<CR>", "Old files" }

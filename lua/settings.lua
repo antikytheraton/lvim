@@ -6,8 +6,6 @@ lvim.transparent_window = false
 lvim.colorscheme = "tokyonight-storm"
 -- Python base dependencies
 vim.g.python3_host_prog = "~/.pyenv/versions/py3nvim/bin/python"
--- format timeout
-lvim.lsp.null_ls.setup.timeout_ms = 100000
 -- Folding
 vim.o.foldenable = false
 vim.opt.foldmethod = "expr"
@@ -18,7 +16,7 @@ lvim.builtin.treesitter.matchup.enable = true
 lvim.builtin.bufferline.active = false
 
 -- disable lint errors on .env files
-table.insert(lvim.lsp.automatic_configuration.skipped_filetypes,"env")
+-- table.insert(lvim.lsp.automatic_configuration.skipped_filetypes, "env")
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line

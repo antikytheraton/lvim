@@ -23,6 +23,12 @@ mappings["sT"] = { "<cmd>TodoTelescope<CR>", "TODO Telescope" }
 mappings["sL"] = { "<cmd>Telescope treesitter<CR>", "Treesitter" }
 mappings["sb"] = { "<cmd>Telescope buffers<cr>", "Find buffer" }
 
+mappings["l"]["f"] = {
+  function()
+    require("lvim.lsp.utils").format { timeout_ms = 2000 }
+  end,
+  "Format",
+}
 -- Test
 mappings["t"] = {
 	name = "Test",

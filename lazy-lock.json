@@ -60,7 +60,7 @@
   "persistence.nvim": { "branch": "main", "commit": "4b8051c01f696d8849a5cb8afa9767be8db16e40" },
   "plenary.nvim": { "branch": "master", "commit": "9ac3e9541bbabd9d73663d757e4fe48a675bb054" },
   "project.nvim": { "branch": "main", "commit": "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
-  "refactoring.nvim": { "branch": "master", "commit": "b1cc851bcb4e3c624abbe2a725237eef6bea765c" },
+  "refactoring.nvim": { "branch": "master", "commit": "2cfd6ddb0acece95d9658560ae9740b98ef70dbb" },
   "schemastore.nvim": { "branch": "main", "commit": "0b396f538f195c249f021a48c3d8988f0d3f86f7" },
   "spellsitter.nvim": { "branch": "master", "commit": "4af8640d9d706447e78c13150ef7475ea2c16b30" },
   "sqlite.lua": { "branch": "master", "commit": "b7e28c8463254c46a8e61c52d27d6a2040492fc3" },

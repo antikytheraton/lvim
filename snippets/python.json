@@ -1,8 +1,10 @@
 {
-    "ipdb": {
-      "prefix": "bb",
-      "body": ["import ipdb; ipdb.set_trace(context=20)"],
-      "description": "add breakpoint"
-    }
+  "ipdb": {
+    "prefix": "bb",
+    "body": [
+      "#BUG: breakpoint",
+      "import ipdb; ipdb.set_trace(context=20)"
+    ],
+    "description": "add breakpoint"
   }
-  
+}

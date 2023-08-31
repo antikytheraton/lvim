@@ -178,13 +178,6 @@ lvim.plugins = {
 			require("refactoring").setup()
 		end,
 	},
-	-- tabtree navigation
-	{
-		"roobert/tabtree.nvim",
-		config = function()
-			require("tabtree").setup()
-		end,
-	},
 	-- image viewer
 	{
 		"samodostal/image.nvim",

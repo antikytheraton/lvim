@@ -31,6 +31,7 @@ fish_add_path $HOME/.npm/bin
 fish_add_path $PYENV_ROOT/bin
 fish_add_path $HOME/.local/bin
 fish_add_path /opt/homebrew/opt/ruby@3.1/bin
+fish_add_path /opt/homebrew/opt/libpq/bin
 
 
 #####################################################
@@ -68,7 +69,8 @@ function poetry_env
 end
 
 function last_changes
-  git diff $(git branch --show-current)@{1} $(git branch --show-current)
+  # git diff $(git branch --show-current)@{1} $(git branch --show-current)
+  git diff $(__git.current_branch)@{1} $(__git.current_branch)
 end
 
 #####################################################

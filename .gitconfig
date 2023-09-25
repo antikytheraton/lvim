@@ -1,0 +1,53 @@
+[user]
+  name = 
+  email = 
+  signingKey = 
+[init]
+  defaultBranch = dev
+[core]
+  editor = lvim
+  excludesfile = ~/.gitignore_global
+  pager = delta
+[merge]
+  conflictstyle = diff3
+[diff]
+  colorMoved = default
+  tool = vimdiff
+[pull]
+  rebase = true
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+[delta]
+  navigate = true
+  features = decorations
+  line-numbers = true
+  side-by-side = true
+  syntax-theme = 1337
+[delta "interactive"]
+  keep-plus-minus-markers = false
+[delta "decorations"]
+  commit-decorations-style = blue ol
+  commit-style = raw
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+[url "ssh://git@gitlab.com/"]
+  insteadOf = https://gitlab.com/
+[alias]
+  #changed = diff ORIG_HEAD..
+  #changed = diff development@{1} development
+  #changed = diff HEAD~1 HEAD
+  #git branch --show-current
+  changed = diff $(__git.default_branch)@{1} $(__git.default_branch)
+[commit]
+  gpgSign = true
+[gpg]
+  program = /opt/homebrew/bin/gpg
+[credential]
+  helper = osxkeychain
+
+[rerere]
+  enabled = true

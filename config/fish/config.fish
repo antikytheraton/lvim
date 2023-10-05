@@ -42,9 +42,19 @@ alias ls='exa -a --color=always --icons --group-directories-first' # all files a
 alias ll='exa -l --color=always --icons --group-directories-first' # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
 
+alias today="date +'%Y_%m_%d'"
+alias clip="pbcopy"
 alias notes='cd ~/.notes && lvim .'
 alias cat='bat -pp --theme="Dracula"'
+alias less='bat'
 
+alias qr="pbpaste | qrencode -o ~/Desktop/qrcode.png && open ~/Desktop/qrcode.png"
+
+alias cb="git rev-parse --abbrev-ref HEAD | tr -d '\n' | pbcopy"
+alias dev="git checkout development && git pull origin development"
+alias mybranches="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | rg Arredondo | rg remote"
+
+alias gogh='bash -c "$(curl -sLo- https://git.io/vQgMr)"'
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
 
 #####################################################
@@ -71,6 +81,15 @@ end
 function last_changes
   # git diff $(git branch --show-current)@{1} $(git branch --show-current)
   git diff $(__git.current_branch)@{1} $(__git.current_branch)
+end
+
+function fix_git_date
+  # To fix the date on squashed commits to be today
+  GIT_COMMITTER_DATE="$(date)" git commit --amend --no-edit --date "$(date)"
+end
+
+function create --argument filename
+  mkdir -p "$(dirname "$filename")" && touch "$filename"
 end
 
 #####################################################

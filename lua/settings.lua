@@ -30,6 +30,9 @@ vim.cmd(
 	[[ au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]]
 )
 
+-- Set persistent custom filetype
+vim.cmd([[ au BufNewFile,BufRead,BufReadPost *.djhtml set ft=htmldjango ]])
+
 -- Autom. read file when changed outside of Vim
 vim.o.autoread = true
 vim.cmd([[ au FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif ]])

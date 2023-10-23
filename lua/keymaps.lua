@@ -24,10 +24,10 @@ mappings["sL"] = { "<cmd>Telescope treesitter<CR>", "Treesitter" }
 mappings["sb"] = { "<cmd>Telescope buffers<cr>", "Find buffer" }
 
 mappings["l"]["f"] = {
-  function()
-    require("lvim.lsp.utils").format { timeout_ms = 2000 }
-  end,
-  "Format",
+	function()
+		require("lvim.lsp.utils").format({ timeout_ms = 2000 })
+	end,
+	"Format",
 }
 -- Test
 mappings["t"] = {
@@ -65,6 +65,13 @@ mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 -- mappings["bk"] = { "<cmd>BufferCloseAllButPinned<cr>", "Close all but pinned buffer(s)" }
 -- mappings["bL"] = { "<cmd>BufferMovePrevious<cr>", "Move buffer to the left" }
 -- mappings["bR"] = { "<cmd>BufferMoveNext<cr>", "Move buffer to the right" }
+
+mappings["x"] = {
+	name = "Misc",
+	["d"] = { "<cmd>%s/\\s\\+$//e<cr>", "Delete trailing spaces" },
+	["j"] = { "<cmd>%!jq '.'<cr>", "Format JSON using JQ" },
+	["p"] = { "<cmd>!reorder-python-imports %<cr>", "Reorder python imports" },
+}
 
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
@@ -105,6 +112,9 @@ map("n", "<F6>", "<cmd>require'dap'.step_over<cr>", opts)
 map("n", "<F7>", "<cmd>require'dap'.step_into<cr>", opts)
 map("n", "<F8>", "<cmd>require'dap'.step_out<cr>", opts)
 map("n", "mm", "<cmd>MinimapToggle<cr>", opts)
+-- Fix some common typos
+map("c", "Q", "q", opts)
+map("c", "W", "w", opts)
 -- format visual selection
 vim.keymap.set("v", "f", vim.lsp.buf.format)
 -- vim.keymap.set("v", "f", vim.lsp.buf.range_formatting())
@@ -143,4 +153,35 @@ end
 -- 	},
 -- })
 
+require("lspconfig").sqlls.setup({
+	on_attach = on_attach,
+	init_options = {
+		settings = {
+			args = {},
+		},
+	},
+})
+
 lvim.lsp.on_attach_callback = on_attach
+
+require("lspconfig").yamlls.setup({
+	settings = {
+		yaml = {
+			schemaStore = {
+				url = "https://www.schemastore.org/api/json/catalog.json",
+				enable = true,
+			},
+			schemas = {
+				["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "/*docker-compose*.y*ml",
+				["https://json.schemastore.org/circleciconfig.json"] = "/*circle*.y*ml",
+				["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+				["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
+				["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.0/all.json"] = "k8s/**",
+				["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
+					"ci/*.yml",
+					".gitlab-ci.yml",
+				},
+			},
+		},
+	},
+})

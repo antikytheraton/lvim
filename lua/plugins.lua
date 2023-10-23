@@ -28,15 +28,6 @@ lvim.plugins = {
 	{ "pbrisbin/vim-mkdir" },
 	-- Wakatime
 	{ "wakatime/vim-wakatime" },
-	-- -- LSP fidget
-	{
-		"j-hui/fidget.nvim",
-		version = "legacy",
-		event = "LspAttach",
-		opts = {
-			-- options
-		},
-	},
 	-- File explorer
 	-- {
 	-- 	"luukvbaal/nnn.nvim",
@@ -54,16 +45,6 @@ lvim.plugins = {
 		config = function()
 			require("neoclip").setup()
 		end,
-	},
-	{
-		"nvim-telescope/telescope-frecency.nvim",
-		config = function()
-			require("telescope").load_extension("frecency")
-		end,
-		dependencies = {
-			{ "nvim-telescope/telescope.nvim" },
-			{ "kkharji/sqlite.lua", module = "sqlite" },
-		},
 	},
 	-- Diagnostics, references, telescope results, quick fix and location lists
 	{ "folke/trouble.nvim", cmd = "TroubleToggle" },
@@ -201,6 +182,10 @@ lvim.plugins = {
 			})
 		end,
 	},
+	-- lua config development
+	{ "folke/neodev.nvim", opts = {} },
+  -- python DAP config
+	{ "mfussenegger/nvim-dap-python" },
 	-- NOTE: THEMES
 	--------------------------------------------------------------------
 	{ "lunarvim/colorschemes" },
@@ -222,3 +207,4 @@ lvim.plugins = {
 ------------------------------------------------------
 require("config.null_ls")
 require("config.telescope")
+require("config.dap")

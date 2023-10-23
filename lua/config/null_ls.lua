@@ -20,7 +20,7 @@ linters.setup({
 	{ name = "terraform_validate" },
 	{ name = "curlylint" },
 	-- { name = "selene" },
-	{ name = "shellcheck", args = { "--severity", "info", "-e", "SC2034"} },
+	{ name = "shellcheck", args = { "--severity", "info", "-e", "SC2034" } },
 	{ name = "checkmake" },
 	-- { name = "pydocstyle" },
 	-- { name = "vulture" },
@@ -47,7 +47,7 @@ formatters.setup({
 	{ exe = "ruff", filetypes = { "python" } },
 	-- { exe = "isort", filetypes = { "python" } },
 	{ exe = "reorder_python_imports", filetypes = { "python" } },
-	{ exe = "djlint", filetypes = { "django", "jinja.html", "htmldjango" } },
+	{ exe = "djlint", filetypes = { "django", "jinja.html", "htmldjango", "djhtml" } },
 	-- { exe = "djhtml", filetypes = { "django", "jinja.html", "htmldjango" } },
 
 	{ exe = "goimports", filetypes = { "go" } },
@@ -55,4 +55,6 @@ formatters.setup({
 
 	{ exe = "rustfmt", filetypes = { "rust" } },
 	{ name = "cmake_format" },
+	{ name = "prettier" },
+	{ name = "beautysh" },
 })

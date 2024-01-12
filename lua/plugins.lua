@@ -7,8 +7,14 @@ lvim.plugins = {
 	{ "tmux-plugins/vim-tmux-focus-events" },
 	-- Enhanced movement plugin
 	{
-		"ggandor/lightspeed.nvim",
+		"ggandor/leap.nvim",
 		event = "BufRead",
+		config = function()
+			require("leap").create_default_mappings()
+		end,
+		dependencies = {
+			"tpope/vim-repeat",
+		},
 	},
 	-- Go development
 	{
@@ -182,10 +188,34 @@ lvim.plugins = {
 			})
 		end,
 	},
-	-- lua config development
-	{ "folke/neodev.nvim", opts = {} },
-  -- python DAP config
+	-- Fidget
+	{
+		"j-hui/fidget.nvim",
+		opts = {
+			integration = {
+				["nvim-tree"] = {
+					enable = false, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+				},
+			},
+		},
+	},
+	-- python DAP config
 	{ "mfussenegger/nvim-dap-python" },
+	-- Draw ASCII diagrams in nvim
+	{ "jbyuki/venn.nvim" },
+	-- Rust DEV
+	{ "rust-lang/rust.vim" },
+	-- Jump to the line
+	{
+		"nacro90/numb.nvim",
+		event = "BufRead",
+		config = function()
+			require("numb").setup({
+				show_numbers = true, -- Enable 'number' for the window while peeking
+				show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+			})
+		end,
+	},
 	-- NOTE: THEMES
 	--------------------------------------------------------------------
 	{ "lunarvim/colorschemes" },
@@ -200,6 +230,7 @@ lvim.plugins = {
 	{ "cocopon/iceberg.vim" },
 	{ "dikiaap/minimalist" },
 	{ "rakr/vim-one" },
+	{ "ntk148v/komau.vim" },
 }
 
 ------------------------------------------------------
@@ -208,3 +239,4 @@ lvim.plugins = {
 require("config.null_ls")
 require("config.telescope")
 require("config.dap")
+require("config.venn")

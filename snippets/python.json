@@ -2,8 +2,7 @@
   "ipdb": {
     "prefix": "bb",
     "body": [
-      "#BUG: breakpoint",
-      "import ipdb; ipdb.set_trace(context=20)"
+      "__import__('ipdb').set_trace(context=20) #HACK: breakpoint"
     ],
     "description": "add breakpoint"
   }

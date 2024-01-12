@@ -73,6 +73,12 @@ mappings["x"] = {
 	["p"] = { "<cmd>!reorder-python-imports %<cr>", "Reorder python imports" },
 }
 
+-- toggle keymappings for venn using <leader>v
+mappings["v"] = {
+	name = "Venn",
+	["v"] = { "<cmd>Toggle_venn()<cr>", "Toggle VENN ASCII Diagrams" },
+}
+
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
@@ -124,6 +130,16 @@ vim.keymap.set({ "n", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", 
 vim.keymap.set({ "n", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
 vim.keymap.set({ "n", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
 
+vim.keymap.set({ "n", "x", "o" }, "\\", function()
+	local focusable_windows = vim.tbl_filter(function(win)
+		return vim.api.nvim_win_get_config(win).focusable
+	end, vim.api.nvim_tabpage_list_wins(0))
+
+	require("leap").leap({
+		target_windows = focusable_windows,
+	})
+end)
+
 -- LSP callback keymaps
 local on_attach = function(client, bufrn)
 	-- local function buf_set_option(...)
@@ -153,14 +169,14 @@ end
 -- 	},
 -- })
 
-require("lspconfig").sqlls.setup({
-	on_attach = on_attach,
-	init_options = {
-		settings = {
-			args = {},
-		},
-	},
-})
+-- require("lspconfig").sqlls.setup({
+-- 	on_attach = on_attach,
+-- 	init_options = {
+-- 		settings = {
+-- 			args = {},
+-- 		},
+-- 	},
+-- })
 
 lvim.lsp.on_attach_callback = on_attach
 
@@ -185,3 +201,5 @@ require("lspconfig").yamlls.setup({
 		},
 	},
 })
+
+require("lspconfig").rust_analyzer.setup({})

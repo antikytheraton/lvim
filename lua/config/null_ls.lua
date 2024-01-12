@@ -53,7 +53,7 @@ formatters.setup({
 	{ exe = "goimports", filetypes = { "go" } },
 	{ exe = "gofumpt", filetypes = { "go" } },
 
-	{ exe = "rustfmt", filetypes = { "rust" } },
+	{ name = "rustfmt" },
 	{ name = "cmake_format" },
 	{ name = "prettier" },
 	{ name = "beautysh" },

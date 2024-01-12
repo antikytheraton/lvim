@@ -14,6 +14,10 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 lvim.builtin.treesitter.matchup.enable = true
 -- disable bufferline plugin
 lvim.builtin.bufferline.active = false
+-- Rust auto format on save
+vim.g.rustfmt_autosave = 1
+-- relative line numbers
+vim.opt.relativenumber = true
 
 -- disable lint errors on .env files
 -- table.insert(lvim.lsp.automatic_configuration.skipped_filetypes, "env")

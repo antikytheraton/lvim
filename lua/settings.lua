@@ -7,6 +7,7 @@ lvim.transparent_window = false
 lvim.colorscheme = "catppuccin-mocha"
 -- Python base dependencies
 vim.g.python3_host_prog = "~/.pyenv/versions/py3nvim/bin/python"
+vim.g.loaded_perl_provider = 0
 -- Folding
 vim.o.foldenable = false
 vim.opt.foldmethod = "expr"

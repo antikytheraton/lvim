@@ -9,9 +9,9 @@ lvim.plugins = {
 	{
 		"ggandor/leap.nvim",
 		event = "BufRead",
-		config = function()
-			require("leap").create_default_mappings()
-		end,
+		-- config = function()
+		-- 	require("leap").create_default_mappings()
+		-- end,
 		dependencies = {
 			"tpope/vim-repeat",
 		},

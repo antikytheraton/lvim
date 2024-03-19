@@ -130,13 +130,19 @@ vim.keymap.set({ "n", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", 
 vim.keymap.set({ "n", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
 vim.keymap.set({ "n", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
 
-vim.keymap.set({ "n", "x", "o" }, "\\", function()
+-- NOTE: Disabling custom Leap settings (defaults)
+-- vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)")
+-- vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward)")
+-- vim.keymap.set({'n', 'x', 'o'}, 't', '<Plug>(leap-forward-till)')
+-- vim.keymap.set({'n', 'x', 'o'}, 'T', '<Plug>(leap-backward-till)')
+vim.keymap.set({ "n", "x", "o" }, "s", function()
 	local focusable_windows = vim.tbl_filter(function(win)
 		return vim.api.nvim_win_get_config(win).focusable
 	end, vim.api.nvim_tabpage_list_wins(0))
 
 	require("leap").leap({
-		target_windows = focusable_windows,
+		-- target_windows = require("leap.util").get_enterable_windows(),
+		target_windows = focusable_windows
 	})
 end)
 

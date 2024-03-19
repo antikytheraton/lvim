@@ -3,7 +3,8 @@
 ------------------------------------------------------
 lvim.leader = ","
 lvim.transparent_window = false
-lvim.colorscheme = "tokyonight-storm"
+-- lvim.colorscheme = "tokyonight-storm"
+lvim.colorscheme = "catppuccin-mocha"
 -- Python base dependencies
 vim.g.python3_host_prog = "~/.pyenv/versions/py3nvim/bin/python"
 -- Folding

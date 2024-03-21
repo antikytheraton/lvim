@@ -68,7 +68,8 @@ mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 
 mappings["x"] = {
 	name = "Misc",
-	["d"] = { "<cmd>%s/\\s\\+$//e<cr>", "Delete trailing spaces" },
+	["t"] = { "<cmd>%s/\\s\\+$//e<cr>", "Delete trailing spaces" },
+	["d"] = { "<cmd>!dos2unix %<cr>", "Dos 2 Unix" },
 	["j"] = { "<cmd>%!jq '.'<cr>", "Format JSON using JQ" },
 	["p"] = { "<cmd>!reorder-python-imports %<cr>", "Reorder python imports" },
 }

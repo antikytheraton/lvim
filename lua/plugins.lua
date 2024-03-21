@@ -23,13 +23,6 @@ lvim.plugins = {
 	},
 	-- Treesitter complements
 	{ "nvim-treesitter/nvim-treesitter-context" },
-	-- spellsitter
-	{
-		"lewis6991/spellsitter.nvim",
-		config = function()
-			require("spellsitter").setup()
-		end,
-	},
 	-- mkdir
 	{ "pbrisbin/vim-mkdir" },
 	-- Wakatime
@@ -216,6 +209,21 @@ lvim.plugins = {
 			})
 		end,
 	},
+	-- NOTE:  WINDOWS
+	--------------------------------------------------------------------
+	-- {
+	-- 	"anuvyklack/windows.nvim",
+	-- 	dependencies = {
+	-- 		"anuvyklack/middleclass",
+	-- 		"anuvyklack/animation.nvim",
+	-- 	},
+	-- 	config = function()
+	-- 		vim.o.winwidth = 10
+	-- 		vim.o.winminwidth = 10
+	-- 		vim.o.equalalways = false
+	-- 		require("windows").setup()
+	-- 	end,
+	-- },
 	-- NOTE: THEMES
 	--------------------------------------------------------------------
 	{ "lunarvim/colorschemes" },

@@ -14,13 +14,19 @@ set -gx LESS "--mouse --wheel-lines=3"
 set -gx VISUAL "lvim"
 set -gx EDITOR "lvim"
 set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
-set -gx BROWSER firefox
+set -gx BROWSER /Applications/Firefox.app/Contents/MacOS/firefox
 set -gx GPG_TTY (tty)
 
-set -gx AWS_PROFILE default
+set -gx AWS_PROFILE motimatic
 set -gx AWS_DEFAULT_PROFILE default
 set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/ruby@3.1/lib/pkgconfig"
+set -gx XDG_CONFIG_HOME "$HOME/.config"
+set -gx NNN_OPENER "$XDG_CONFIG_HOME/nnn/plugins/nuke"
 
+set -gx LANG "en_US.UTF-8"
+
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
 
 #####################################################
 # PATH
@@ -32,7 +38,9 @@ fish_add_path $PYENV_ROOT/bin
 fish_add_path $HOME/.local/bin
 fish_add_path /opt/homebrew/opt/ruby@3.1/bin
 fish_add_path /opt/homebrew/opt/libpq/bin
-
+fish_add_path /opt/homebrew/opt/ffmpeg@5/bin
+fish_add_path $HOME/.config/emacs/bin
+fish_add_path $HOME/.rd/bin
 
 #####################################################
 # ALIAS
@@ -45,10 +53,15 @@ alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias today="date +'%Y_%m_%d'"
 alias clip="pbcopy"
 alias notes='cd ~/.notes && lvim .'
-alias cat='bat -pp --theme="Dracula"'
-alias less='bat'
+alias cat='bat -pp --theme="Monokai Extended"'
+alias less='bat --theme="Monokai Extended"'
 
 alias qr="pbpaste | qrencode -o ~/Desktop/qrcode.png && open ~/Desktop/qrcode.png"
+alias lzd="lazydocker"
+alias gj="git jump"
+
+alias emacs="emacsclient -c -a 'emacs'"
+alias rem="killall emacs || killall Emacs-arm64-11 || echo 'Emacs server not running'; /opt/homebrew/bin/emacs --daemon"
 
 alias cb="git rev-parse --abbrev-ref HEAD | tr -d '\n' | pbcopy"
 alias dev="git checkout development && git pull origin development"
@@ -56,6 +69,9 @@ alias mybranches="git for-each-ref --format='%(committerdate) %09 %(authorname) 
 
 alias gogh='bash -c "$(curl -sLo- https://git.io/vQgMr)"'
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
+alias nf='neofetch'
+alias ff='fastfetch'
+alias pf='pfetch'
 
 #####################################################
 # FUNCTIONS
@@ -92,6 +108,15 @@ function create --argument filename
   mkdir -p "$(dirname "$filename")" && touch "$filename"
 end
 
+function rm-git-untraked
+  git ls-files --others --exclude-standard | fzf -m | xargs rm
+  echo "removed untracked files from project"
+end
+
+# if command -sq ngrok > /dev/null
+#     eval (ngrok completion)
+# end
+
 #####################################################
 # PROMPT
 #####################################################
@@ -102,12 +127,15 @@ if status is-interactive
     if not set -q TMUX
         exec tmux new-session -ADs geek-1
     end
+
     # Commands to run in interactive sessions can go here
     # source ~/.env
     # The next line updates PATH for the Google Cloud SDK.
     if [ -f "$HOME/google-cloud-sdk/path.fish.inc" ]; . "$HOME/google-cloud-sdk/path.fish.inc"; end
 
+    source ~/.asdf/asdf.fish
 end
 
 pyenv init - | source
 starship init fish | source
+

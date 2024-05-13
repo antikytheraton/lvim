@@ -8,5 +8,16 @@
     "prefix": "tt",
     "body": ["import typing as t"],
     "description": "add typing"
+  },
+  "celery_sync": {
+    "prefix": "celery",
+    "body": [
+      "app.conf.update(",
+      "task_always_eager=True,",
+      "task_eager_propagates=True,",
+      "broker_url=\"memory://\",",
+      ")"
+    ],
+    "description": "celery sync config"
   }
 }

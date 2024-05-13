@@ -3,7 +3,6 @@
 ------------------------------------------------------
 lvim.leader = ","
 lvim.transparent_window = false
--- lvim.colorscheme = "tokyonight-storm"
 lvim.colorscheme = "catppuccin-mocha"
 -- Python base dependencies
 vim.g.python3_host_prog = "~/.pyenv/versions/py3nvim/bin/python"
@@ -19,7 +18,7 @@ lvim.builtin.bufferline.active = false
 -- Rust auto format on save
 vim.g.rustfmt_autosave = 1
 -- relative line numbers
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 -- disable lint errors on .env files
 -- table.insert(lvim.lsp.automatic_configuration.skipped_filetypes, "env")

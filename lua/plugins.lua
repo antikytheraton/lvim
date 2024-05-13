@@ -5,6 +5,17 @@ lvim.plugins = {
 	-- TMUX navigator
 	{ "christoomey/vim-tmux-navigator" },
 	{ "tmux-plugins/vim-tmux-focus-events" },
+	-- Zellij Multiplexer
+	{
+		"Lilja/zellij.nvim",
+		config = function()
+			require("zellij").setup({
+				path = "zellij", -- Zellij binary path
+				vimTmuxNavigatorKeybinds = true, -- Will set keybinds like <C-h> to left
+				debug = false, -- Will log things to /tmp/zellij.nvim
+			})
+		end,
+	},
 	-- Enhanced movement plugin
 	{
 		"ggandor/leap.nvim",
@@ -45,8 +56,11 @@ lvim.plugins = {
 			require("neoclip").setup()
 		end,
 	},
+	{
+		"nvim-telescope/telescope-symbols.nvim",
+	},
 	-- Diagnostics, references, telescope results, quick fix and location lists
-	{ "folke/trouble.nvim", cmd = "TroubleToggle" },
+	{ "folke/trouble.nvim", branch = "dev", opts = {} },
 	-- GIT blame
 	{
 		"f-person/git-blame.nvim",
@@ -239,6 +253,8 @@ lvim.plugins = {
 	{ "dikiaap/minimalist" },
 	{ "rakr/vim-one" },
 	{ "ntk148v/komau.vim" },
+	{ "neanias/everforest-nvim" },
+	{ "rebelot/kanagawa.nvim" },
 }
 
 ------------------------------------------------------

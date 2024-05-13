@@ -9,19 +9,33 @@ lvim.builtin.terminal.open_mapping = [[<c-n>]]
 
 local mappings = lvim.builtin.which_key.mappings
 -- Navigation
--- mappings["e"] = { "<cmd>NnnPicker %:p:h<CR>", "Explorer" }
 mappings["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" }
+-- mappings["n"] = { "<cmd>NnnPicker %:p:h<CR>", "Explorer" }
 mappings["|"] = { "<cmd>vsp<cr>", "Window vertical split" }
 mappings["-"] = { "<cmd>sp<cr>", "Window horizontal split" }
 mappings["m"] = { "<cmd>MinimapToggle<cr>", "Toggle minimap" }
 -- Telescope
 mappings["c"] = { "<cmd>Telescope neoclip star<CR>", "Clipboard manager" }
-mappings["so"] = { "<cmd>Telescope oldfiles<CR>", "Old files" }
-mappings["sw"] = { "<cmd>Telescope grep_string<CR>", "Word under cursor" }
-mappings["sm"] = { "<cmd>Telescope marks<CR>", "Bookmarks" }
-mappings["sT"] = { "<cmd>TodoTelescope<CR>", "TODO Telescope" }
-mappings["sL"] = { "<cmd>Telescope treesitter<CR>", "Treesitter" }
-mappings["sb"] = { "<cmd>Telescope buffers<cr>", "Find buffer" }
+mappings["s"] = {
+	name = "Telescope",
+	b = { "<cmd>Telescope buffers<cr>", "Find buffer" },
+	c = { "<cmd>Telescope git_bcommits<cr>", "GIT Buffer Commits" },
+	C = { "<cmd>Telescope git_commits<cr>", "GIT Commits" },
+	d = { "<cmd>Telescope lsp_document_symbols<cr>", "LSP Symbols" },
+	e = { "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji', 'kaomoji', 'gitmoji'} }<cr>", "Emoji" },
+	f = { "<cmd>Telescope lsp_type_definitions<cr>", "LSP Type Definitions" },
+	l = { "<cmd>Telescope spell_suggest<cr>", "Spell suggest" },
+	L = { "<cmd>Telescope treesitter<CR>", "Treesitter" },
+	m = { "<cmd>Telescope marks<CR>", "Bookmarks" },
+	o = { "<cmd>Telescope oldfiles<CR>", "Old files" },
+	p = { "<cmd>Telescope planets<CR>", "Planets" },
+	r = { "<cmd>Telescope lsp_references<cr>", "LSP References" },
+	s = { "<cmd>Telescope git_stash<cr>", "GIT Stash" },
+	S = { "<cmd>Telescope git_status<cr>", "GIT Status" },
+	t = { "<cmd>Telescope live_grep<CR>", "Search Text" },
+	T = { "<cmd>TodoTelescope<CR>", "Find TODO" },
+	w = { "<cmd>Telescope grep_string<CR>", "Word under cursor" },
+}
 
 mappings["l"]["f"] = {
 	function()
@@ -50,15 +64,20 @@ mappings["S"] = {
 -- Gitsigns
 mappings["gS"] = { '<cmd>lua require"gitsigns".stage_buffer()<cr>', "Stage Buffer" }
 -- Trouble
-mappings["lt"] = {
+mappings["x"] = {
 	name = "Trouble",
-	r = { "<cmd>Trouble lsp_references<cr>", "References" },
-	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-	d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
-	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-	w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+	x = { "<cmd>Trouble diagnostics toggle<cr>", "Diagnostics (Trouble" },
+	X = { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Buffer Diagnostics (Trouble)" },
+	s = { "<cmd>Trouble symbols toggle focus=false<cr>", "Symbols (Trouble)" },
+	q = { "<cmd>Trouble qflist toggle<cr>", "Quickfix List (Trouble)" },
+	l = { "<cmd>Trouble loclist toggle<cr>", "Location List (Trouble)" },
+	r = {
+		"<cmd>Trouble symbols toggle pinned=true results.win.relative=win results.win.position=right<cr>",
+		"LSP Definitions / references / ... (Trouble)",
+	},
 }
+vim.keymap.set("n", "gR", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
+
 -- Buffers
 mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 -- mappings["bp"] = { "<cmd>BufferPin<cr>", "Pin/Unpin buffer" }
@@ -66,10 +85,11 @@ mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 -- mappings["bL"] = { "<cmd>BufferMovePrevious<cr>", "Move buffer to the left" }
 -- mappings["bR"] = { "<cmd>BufferMoveNext<cr>", "Move buffer to the right" }
 
-mappings["x"] = {
+mappings["m"] = {
 	name = "Misc",
 	["t"] = { "<cmd>%s/\\s\\+$//e<cr>", "Delete trailing spaces" },
 	["d"] = { "<cmd>!dos2unix %<cr>", "Dos 2 Unix" },
+	["u"] = { "<cmd>!unix2dos %<cr>", "Unix 2 Dos" },
 	["j"] = { "<cmd>%!jq '.'<cr>", "Format JSON using JQ" },
 	["p"] = { "<cmd>!reorder-python-imports %<cr>", "Reorder python imports" },
 }
@@ -136,6 +156,7 @@ vim.keymap.set({ "n", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>"
 -- vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward)")
 -- vim.keymap.set({'n', 'x', 'o'}, 't', '<Plug>(leap-forward-till)')
 -- vim.keymap.set({'n', 'x', 'o'}, 'T', '<Plug>(leap-backward-till)')
+
 vim.keymap.set({ "n", "x", "o" }, "s", function()
 	local focusable_windows = vim.tbl_filter(function(win)
 		return vim.api.nvim_win_get_config(win).focusable
@@ -143,70 +164,6 @@ vim.keymap.set({ "n", "x", "o" }, "s", function()
 
 	require("leap").leap({
 		-- target_windows = require("leap.util").get_enterable_windows(),
-		target_windows = focusable_windows
+		target_windows = focusable_windows,
 	})
 end)
-
--- LSP callback keymaps
-local on_attach = function(client, bufrn)
-	-- local function buf_set_option(...)
-	-- 	vim.api.nvim_buf_set_option(bufrn, ...)
-	-- end
-	-- buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-	local function buf_set_keymap(...)
-		vim.api.nvim_buf_set_keymap(bufrn, ...)
-	end
-
-	buf_set_keymap("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-
-	if client.server_capabilities.document_formatting then
-		buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-	elseif client.server_capabilities.document_range_formatting then
-		buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-	end
-end
-
--- require("lspconfig").ruff_lsp.setup({
--- 	on_attach = on_attach,
--- 	init_options = {
--- 		settings = {
--- 			args = {},
--- 		},
--- 	},
--- })
-
--- require("lspconfig").sqlls.setup({
--- 	on_attach = on_attach,
--- 	init_options = {
--- 		settings = {
--- 			args = {},
--- 		},
--- 	},
--- })
-
-lvim.lsp.on_attach_callback = on_attach
-
-require("lspconfig").yamlls.setup({
-	settings = {
-		yaml = {
-			schemaStore = {
-				url = "https://www.schemastore.org/api/json/catalog.json",
-				enable = true,
-			},
-			schemas = {
-				["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "/*docker-compose*.y*ml",
-				["https://json.schemastore.org/circleciconfig.json"] = "/*circle*.y*ml",
-				["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-				["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
-				["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.0/all.json"] = "k8s/**",
-				["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
-					"ci/*.yml",
-					".gitlab-ci.yml",
-				},
-			},
-		},
-	},
-})
-
-require("lspconfig").rust_analyzer.setup({})

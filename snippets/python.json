@@ -1,9 +1,12 @@
 {
   "ipdb": {
     "prefix": "bb",
-    "body": [
-      "__import__('ipdb').set_trace(context=20) #HACK: breakpoint"
-    ],
+    "body": ["__import__('ipdb').set_trace(context=20) #HACK: breakpoint"],
     "description": "add breakpoint"
+  },
+  "typing": {
+    "prefix": "tt",
+    "body": ["import typing as t"],
+    "description": "add typing"
   }
 }

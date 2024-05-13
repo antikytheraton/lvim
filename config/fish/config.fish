@@ -61,6 +61,7 @@ alias lzd="lazydocker"
 alias gj="git jump"
 
 alias emacs="emacsclient -c -a 'emacs'"
+alias pyink="~/.pyenv/versions/py3nvim/bin/pyink"
 alias rem="killall emacs || killall Emacs-arm64-11 || echo 'Emacs server not running'; /opt/homebrew/bin/emacs --daemon"
 
 alias cb="git rev-parse --abbrev-ref HEAD | tr -d '\n' | pbcopy"
@@ -124,9 +125,9 @@ if status is-interactive
 
     eval (/opt/homebrew/bin/brew shellenv)
 
-    if not set -q TMUX
-        exec tmux new-session -ADs geek-1
-    end
+    # if not set -q TMUX
+    #     exec tmux new-session -ADs geek-1
+    # end
 
     # Commands to run in interactive sessions can go here
     # source ~/.env

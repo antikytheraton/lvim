@@ -6,13 +6,24 @@ lvim.plugins = {
 	{ "christoomey/vim-tmux-navigator" },
 	{ "tmux-plugins/vim-tmux-focus-events" },
 	-- Zellij Multiplexer
+	-- {
+	-- 	"Lilja/zellij.nvim",
+	-- 	config = function()
+	-- 		require("zellij").setup({
+	-- 			path = "zellij", -- Zellij binary path
+	-- 			vimTmuxNavigatorKeybinds = true, -- Will set keybinds like <C-h> to left
+	-- 			debug = false, -- Will log things to /tmp/zellij.nvim
+	-- 		})
+	-- 	end,
+	-- },
+	-- surround
 	{
-		"Lilja/zellij.nvim",
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
 		config = function()
-			require("zellij").setup({
-				path = "zellij", -- Zellij binary path
-				vimTmuxNavigatorKeybinds = true, -- Will set keybinds like <C-h> to left
-				debug = false, -- Will log things to /tmp/zellij.nvim
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
 			})
 		end,
 	},
@@ -58,6 +69,14 @@ lvim.plugins = {
 	},
 	{
 		"nvim-telescope/telescope-symbols.nvim",
+	},
+	{
+		"nvim-telescope/telescope-media-files.nvim",
+		dependencies = {
+			{ "nvim-lua/popup.nvim" },
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-telescope/telescope.nvim" },
+		},
 	},
 	-- Diagnostics, references, telescope results, quick fix and location lists
 	{ "folke/trouble.nvim", branch = "dev", opts = {} },
@@ -173,28 +192,6 @@ lvim.plugins = {
 		end,
 	},
 	-- image viewer
-	{
-		"samodostal/image.nvim",
-		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "m00qek/baleia.nvim", version = "v1.3.0" },
-		},
-		config = function()
-			require("image").setup({
-				render = {
-					min_padding = 5,
-					show_label = true,
-					show_image_dimensions = true,
-					use_dither = true,
-					foreground_color = true,
-					background_color = true,
-				},
-				events = {
-					update_on_nvim_resize = true,
-				},
-			})
-		end,
-	},
 	-- Fidget
 	{
 		"j-hui/fidget.nvim",

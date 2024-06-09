@@ -38,6 +38,7 @@ end
 -- })
 
 require("lspconfig").pyright.setup({})
+require("lspconfig").gopls.setup({})
 
 
 require("lspconfig").hls.setup({
@@ -71,4 +72,4 @@ require("lspconfig").yamlls.setup({
 
 require("lspconfig").rust_analyzer.setup({})
 
--- require("lspconfig").lua_ls.setup({})
+require("lspconfig").lua_ls.setup({})

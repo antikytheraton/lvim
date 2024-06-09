@@ -16,7 +16,7 @@ linters.setup({
 	-- { exe = "flake8", filetypes = { "python" } },
 	-- { exe = "pyproject_flake8", filetypes = { "python" } },
 	{ exe = "golangci-lint", filetypes = { "go" } },
-	{ name = "codespell" },
+	-- { name = "codespell" },
 	{ name = "terraform_validate" },
 	{ name = "curlylint" },
 	-- { name = "selene" },

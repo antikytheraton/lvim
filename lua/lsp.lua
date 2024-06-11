@@ -19,33 +19,6 @@ local on_attach = function(client, bufrn)
 	end
 end
 
--- require("lspconfig").ruff_lsp.setup({
--- 	on_attach = on_attach,
--- 	init_options = {
--- 		settings = {
--- 			args = {},
--- 		},
--- 	},
--- })
-
--- require("lspconfig").sqlls.setup({
--- 	on_attach = on_attach,
--- 	init_options = {
--- 		settings = {
--- 			args = {},
--- 		},
--- 	},
--- })
-
-require("lspconfig").pyright.setup({})
-require("lspconfig").gopls.setup({})
-
-
-require("lspconfig").hls.setup({
-	cmd = { "/opt/homebrew/bin/haskell-language-server-9.8.2", "--lsp" },
-	filetypes = { "haskell", "lhaskell", "cabal" },
-})
-
 lvim.lsp.on_attach_callback = on_attach
 
 require("lspconfig").yamlls.setup({
@@ -69,7 +42,3 @@ require("lspconfig").yamlls.setup({
 		},
 	},
 })
-
-require("lspconfig").rust_analyzer.setup({})
-
-require("lspconfig").lua_ls.setup({})

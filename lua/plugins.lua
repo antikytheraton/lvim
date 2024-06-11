@@ -3,20 +3,24 @@
 ------------------------------------------------------
 lvim.plugins = {
 	-- TMUX navigator
-	{ "christoomey/vim-tmux-navigator" },
-	{ "tmux-plugins/vim-tmux-focus-events" },
-	-- Zellij Multiplexer
-	-- {
-	-- 	"Lilja/zellij.nvim",
-	-- 	config = function()
-	-- 		require("zellij").setup({
-	-- 			path = "zellij", -- Zellij binary path
-	-- 			vimTmuxNavigatorKeybinds = true, -- Will set keybinds like <C-h> to left
-	-- 			debug = false, -- Will log things to /tmp/zellij.nvim
-	-- 		})
-	-- 	end,
-	-- },
-	-- surround
+	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		keys = {
+			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-|>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+		},
+	},
+	-- Surround
 	{
 		"kylechui/nvim-surround",
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -27,6 +31,32 @@ lvim.plugins = {
 			})
 		end,
 	},
+	-- Glow Markdown preview
+	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
+	-- Load dotenv file variables
+	{ "tpope/vim-dotenv" },
+	-- repeat supported maps with "."
+	{ "tpope/vim-repeat" },
+	-- HTML tags
+	{
+		"windwp/nvim-ts-autotag",
+		config = function()
+			require("nvim-ts-autotag").setup()
+		end,
+	},
+	-- LSP signature
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "BufRead",
+		config = function()
+			require("lsp_signature").on_attach({
+				floating_window = false,
+				hint_prefix = "🐼 ",
+			})
+		end,
+	},
+	-- Draw ASCII diagrams in nvim
+	{ "jbyuki/venn.nvim" },
 	-- Enhanced movement plugin
 	{
 		"ggandor/leap.nvim",
@@ -49,96 +79,18 @@ lvim.plugins = {
 	{ "pbrisbin/vim-mkdir" },
 	-- Wakatime
 	{ "wakatime/vim-wakatime" },
-	-- File explorer
-	-- {
-	-- 	"luukvbaal/nnn.nvim",
-	-- 	config = function()
-	-- 		require("config.nnn").setup()
-	-- 	end,
-	-- },
-	-- telescope extensions
-	{
-		"AckslD/nvim-neoclip.lua",
-		dependencies = {
-			{ "nvim-telescope/telescope.nvim" },
-			{ "kkharji/sqlite.lua", module = "sqlite" },
-		},
-		config = function()
-			require("neoclip").setup()
-		end,
-	},
-	{
-		"nvim-telescope/telescope-symbols.nvim",
-	},
-	{
-		"nvim-telescope/telescope-media-files.nvim",
-		dependencies = {
-			{ "nvim-lua/popup.nvim" },
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope.nvim" },
-		},
-	},
 	-- Diagnostics, references, telescope results, quick fix and location lists
-	{ "folke/trouble.nvim", branch = "dev", opts = {} },
-	-- GIT blame
-	{
-		"f-person/git-blame.nvim",
-		event = "BufRead",
-		config = function()
-			vim.cmd("highlight default link gitblame SpecialComment")
-			vim.g.gitblame_enabled = 0
-		end,
-	},
+	-- { "folke/trouble.nvim",            branch = "main", opts = {} },
 	-- Move like a spider
 	{ "chrisgrieser/nvim-spider", lazy = true },
-	-- Glow Markdown preview
-	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
-	-- -- Emoji on cmp
-	-- { "hrsh7th/cmp-emoji" },
-	-- Minimap
+	-- Jump to the line
 	{
-		"wfxr/minimap.vim",
-		build = "cargo install --locked code-minimap",
-		cmd = { "Minimap", "MinimapClose", "MinimapToggle", "MinimapRefresh", "MinimapUpdateHighlight" },
-		config = function()
-			vim.cmd("let g:minimap_width = 10")
-			vim.cmd("let g:minimap_auto_start = 1")
-			vim.cmd("let g:minimap_auto_start_win_enter = 1")
-		end,
-	},
-	-- Tests
-	{
-		"nvim-neotest/neotest",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			"antoinemadec/FixCursorHold.nvim",
-			"nvim-neotest/neotest-go",
-			"nvim-neotest/neotest-python",
-		},
-		config = function()
-			require("config.neotest").setup()
-		end,
-	},
-	-- Load dotenv file variables
-	{ "tpope/vim-dotenv" },
-	-- repeat supported maps with "."
-	{ "tpope/vim-repeat" },
-	-- HTML tags
-	{
-		"windwp/nvim-ts-autotag",
-		config = function()
-			require("nvim-ts-autotag").setup()
-		end,
-	},
-	-- LSP signature
-	{
-		"ray-x/lsp_signature.nvim",
+		"nacro90/numb.nvim",
 		event = "BufRead",
 		config = function()
-			require("lsp_signature").on_attach({
-				floating_window = false,
-				hint_prefix = "🐼 ",
+			require("numb").setup({
+				show_numbers = true, -- Enable 'number' for the window while peeking
+				show_cursorline = true, -- Enable 'cursorline' for the window while peeking
 			})
 		end,
 	},
@@ -166,6 +118,17 @@ lvim.plugins = {
 			require("config.persistence").setup()
 		end,
 	},
+	-- Fidget
+	{
+		"j-hui/fidget.nvim",
+		opts = {
+			integration = {
+				["nvim-tree"] = {
+					enable = false, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+				},
+			},
+		},
+	},
 	-- colorizer
 	{
 		"norcalli/nvim-colorizer.lua",
@@ -182,117 +145,80 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"ThePrimeagen/refactoring.nvim",
+		"ryanmsnyder/toggleterm-manager.nvim",
 		dependencies = {
+			"akinsho/nvim-toggleterm.lua",
+			"nvim-telescope/telescope.nvim",
+			"nvim-lua/plenary.nvim", -- only needed because it's a dependency of telescope
+		},
+		config = function()
+			require("config.term_manager").setup()
+		end,
+	},
+	-- telescope extensions
+	{
+		"AckslD/nvim-neoclip.lua",
+		dependencies = {
+			{ "nvim-telescope/telescope.nvim" },
+			{ "kkharji/sqlite.lua", module = "sqlite" },
+		},
+		config = function()
+			require("neoclip").setup()
+		end,
+	},
+	{
+		"nvim-telescope/telescope-symbols.nvim",
+	},
+	{
+		"nvim-telescope/telescope-media-files.nvim",
+		dependencies = {
+			{ "nvim-lua/popup.nvim" },
 			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-treesitter/nvim-treesitter" },
-		},
-		config = function()
-			require("refactoring").setup()
-		end,
-	},
-	-- image viewer
-	-- Fidget
-	{
-		"j-hui/fidget.nvim",
-		opts = {
-			integration = {
-				["nvim-tree"] = {
-					enable = false, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
-				},
-			},
+			{ "nvim-telescope/telescope.nvim" },
 		},
 	},
-	-- python DAP config
-	{ "mfussenegger/nvim-dap-python" },
-	-- Draw ASCII diagrams in nvim
-	{ "jbyuki/venn.nvim" },
-	-- Rust DEV
-	{ "rust-lang/rust.vim" },
-	-- Jump to the line
+	-- Trouble
 	{
-		"nacro90/numb.nvim",
-		event = "BufRead",
-		config = function()
-			require("numb").setup({
-				show_numbers = true, -- Enable 'number' for the window while peeking
-				show_cursorline = true, -- Enable 'cursorline' for the window while peeking
-			})
-		end,
+		"folke/trouble.nvim",
+		opts = {}, -- for default options, refer to the configuration section for custom setup.
+		cmd = "Trouble",
 	},
 	-- NOTE:  WINDOWS
 	--------------------------------------------------------------------
-	-- {
-	-- 	"anuvyklack/windows.nvim",
-	-- 	dependencies = {
-	-- 		"anuvyklack/middleclass",
-	-- 		"anuvyklack/animation.nvim",
-	-- 	},
-	-- 	config = function()
-	-- 		vim.o.winwidth = 10
-	-- 		vim.o.winminwidth = 10
-	-- 		vim.o.equalalways = false
-	-- 		require("windows").setup()
-	-- 	end,
-	-- },
+	{
+		"anuvyklack/windows.nvim",
+		dependencies = {
+			"anuvyklack/middleclass",
+			"anuvyklack/animation.nvim",
+		},
+		config = function()
+			vim.o.winwidth = 10
+			vim.o.winminwidth = 10
+			vim.o.equalalways = false
+			require("windows").setup()
+		end,
+	},
 	-- NOTE: THEMES
 	--------------------------------------------------------------------
-	{ "lunarvim/colorschemes" },
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-	{ "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
-	{ "EdenEast/nightfox.nvim", priority = 1000 },
-	{ "marko-cerovac/material.nvim", priority = 1000 },
-	{ "ellisonleao/gruvbox.nvim", priority = 1000 },
-	{ "NTBBloodbath/doom-one.nvim", priority = 1000 },
+	-- { "lunarvim/colorschemes" },
+	{ "catppuccin/nvim", name = "catppuccin" },
+	{ "folke/tokyonight.nvim", lazy = false, opts = {} },
+	{ "EdenEast/nightfox.nvim" },
+	{ "ellisonleao/gruvbox.nvim" },
+	{ "NTBBloodbath/doom-one.nvim" },
 	{ "NLKNguyen/papercolor-theme" },
 	{ "ayu-theme/ayu-vim" },
 	{ "cocopon/iceberg.vim" },
-	{ "dikiaap/minimalist" },
-	{ "rakr/vim-one" },
-	{ "ntk148v/komau.vim" },
 	{ "neanias/everforest-nvim" },
 	{ "rebelot/kanagawa.nvim" },
 	{ "rose-pine/neovim", name = "rose-pine" },
-	{
-		"diegoulloao/neofusion.nvim",
-		priority = 1000,
-		opts = {},
-		config = function()
-			require("neofusion").setup({
-				terminal_colors = true, -- add neovim terminal colors
-				undercurl = true,
-				underline = true,
-				bold = true,
-				italic = {
-					strings = true,
-					emphasis = true,
-					comments = true,
-					operators = false,
-					folds = true,
-				},
-				strikethrough = true,
-				invert_selection = false,
-				invert_signs = false,
-				invert_tabline = false,
-				invert_intend_guides = false,
-				inverse = true, -- invert background for search, diffs, statuslines and errors
-				palette_overrides = {},
-				overrides = {},
-				dim_inactive = false,
-				transparent_mode = false,
-			})
-			-- if lvim.colorscheme == "neofusion" then
-			-- 	lvim.builtin.lualine.options.theme = require("neofusion.lualine")
-			-- end
-		end,
-	},
+	{ "diegoulloao/neofusion.nvim" },
 }
 
 ------------------------------------------------------
 -- Load custom configurations
 ------------------------------------------------------
+require("config.big_file")
 require("config.null_ls")
 require("config.telescope")
-require("config.dap")
 require("config.venn")
-require("config.big_file")

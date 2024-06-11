@@ -1,70 +1,52 @@
 ------------------------------------------------------
 -- Keymaps
 ------------------------------------------------------
-
-lvim.builtin.terminal.shell = "/usr/bin/env fish"
 lvim.builtin.terminal.open_mapping = [[<c-n>]]
 
--- lvim.builtin.nvimtree.active = false -- NOTE: using NNN
-
 local mappings = lvim.builtin.which_key.mappings
--- Navigation
-mappings["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" }
--- mappings["n"] = { "<cmd>NnnPicker %:p:h<CR>", "Explorer" }
+
 mappings["|"] = { "<cmd>vsp<cr>", "Window vertical split" }
 mappings["-"] = { "<cmd>sp<cr>", "Window horizontal split" }
-mappings["m"] = { "<cmd>MinimapToggle<cr>", "Toggle minimap" }
--- Telescope
 mappings["c"] = { "<cmd>Telescope neoclip star<CR>", "Clipboard manager" }
-mappings["s"] = {
-	name = "Telescope",
-	b = { "<cmd>Telescope buffers<cr>", "Find buffer" },
-	-- c = { "<cmd>Telescope git_bcommits<cr>", "GIT Buffer Commits" },
-	c = { "<cmd>Telescope colorscheme<cr>", "Color schemes" },
-	C = { "<cmd>Telescope git_commits<cr>", "GIT Commits" },
-	d = { "<cmd>Telescope lsp_document_symbols<cr>", "LSP Symbols" },
-	e = { "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji', 'kaomoji', 'gitmoji'} }<cr>", "Emoji" },
-	f = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Current buffer fuzzy find" },
-	l = { "<cmd>Telescope resume<cr>", "Resume last search" },
-	L = { "<cmd>Telescope treesitter<CR>", "Treesitter" },
-	m = { "<cmd>Telescope media_files<CR>", "Media Files" },
-	M = { "<cmd>Telescope marks<CR>", "Bookmarks" },
-	o = { "<cmd>Telescope oldfiles<CR>", "Old files" },
-	p = { "<cmd>Telescope planets<CR>", "Planets" },
-	r = { "<cmd>Telescope lsp_references<cr>", "LSP References" },
-	s = { "<cmd>Telescope git_stash<cr>", "GIT Stash" },
-	S = { "<cmd>Telescope git_status<cr>", "GIT Status" },
-	t = { "<cmd>Telescope live_grep<CR>", "Search Text" },
-	T = { "<cmd>TodoTelescope<CR>", "Find TODO" },
-	w = { "<cmd>Telescope grep_string<CR>", "Word under cursor" },
-}
+mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 
-mappings["l"]["f"] = {
-	function()
-		require("lvim.lsp.utils").format({ timeout_ms = 2000 })
-	end,
-	"Format",
-}
--- Test
-mappings["t"] = {
-	name = "Test",
-	r = { '<cmd>lua require("neotest").run.run(vim.fn.getcwd())<CR>', "Run tests" },
-	n = { '<cmd>lua require("neotest").run.run()<CR>', "Run nearest test" },
-	d = { '<cmd>lua require("neotest").run.run({strategy = "dap"})<CR>', "Debug nearest test" },
-	s = { '<cmd>lua require("neotest").run.stop()<CR>', "Stop test" },
-	t = { '<cmd>lua require("neotest").summary.toggle()<CR>', "Toggle summary" },
-	a = { '<cmd>lua require("neotest").run.attach()<CR>', "Test attach" },
-	o = { "<cmd>Neotest output<CR>", "Show test output" },
-}
+-- Telescope
+mappings["s"]["e"] = { "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji', 'kaomoji', 'gitmoji'} }<cr>",
+  "Emoji" }
+mappings["s"]["M"] = { "<cmd>Telescope marks<CR>", "Bookmarks" }
+mappings["s"]["o"] = { "<cmd>Telescope oldfiles<CR>", "Old files" }
+mappings["s"]["T"] = { "<cmd>TodoTelescope<CR>", "Find TODO" }
+mappings["s"]["w"] = { "<cmd>Telescope grep_string<CR>", "Word under cursor" }
+
+-- custom LSP format
+mappings["l"]["f"] = { "<cmd>lua require('lvim.lsp.utils').format({timeout_ms=2000})<cr>", "Format" }
+
 -- Sessions
 mappings["S"] = {
-	name = "Session",
-	c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
-	l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
-	Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
+  name = "Session",
+  c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+  l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+  Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
+
 -- Gitsigns
 mappings["gS"] = { '<cmd>lua require"gitsigns".stage_buffer()<cr>', "Stage Buffer" }
+
+-- Misc utils
+mappings["m"] = {
+  name = "Misc",
+  ["t"] = { "<cmd>%s/\\s\\+$//e<cr>", "Delete trailing spaces" },
+  ["d"] = { "<cmd>!dos2unix %<cr>", "Dos 2 Unix" },
+  ["u"] = { "<cmd>!unix2dos %<cr>", "Unix 2 Dos" },
+  ["j"] = { "<cmd>%!jq '.'<cr>", "Format JSON using JQ" },
+  ["p"] = { "<cmd>!reorder-python-imports %<cr>", "Reorder python imports" },
+}
+-- toggle keymappings for venn using <leader>v
+mappings["v"] = {
+  name = "Venn",
+  ["v"] = { "<cmd>Toggle_venn()<cr>", "Toggle VENN ASCII Diagrams" },
+}
+
 -- Trouble
 mappings["x"] = {
 	name = "Trouble",
@@ -80,33 +62,13 @@ mappings["x"] = {
 }
 vim.keymap.set("n", "gR", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
 
--- Buffers
-mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
--- mappings["bp"] = { "<cmd>BufferPin<cr>", "Pin/Unpin buffer" }
--- mappings["bk"] = { "<cmd>BufferCloseAllButPinned<cr>", "Close all but pinned buffer(s)" }
--- mappings["bL"] = { "<cmd>BufferMovePrevious<cr>", "Move buffer to the left" }
--- mappings["bR"] = { "<cmd>BufferMoveNext<cr>", "Move buffer to the right" }
-
-mappings["m"] = {
-	name = "Misc",
-	["t"] = { "<cmd>%s/\\s\\+$//e<cr>", "Delete trailing spaces" },
-	["d"] = { "<cmd>!dos2unix %<cr>", "Dos 2 Unix" },
-	["u"] = { "<cmd>!unix2dos %<cr>", "Unix 2 Dos" },
-	["j"] = { "<cmd>%!jq '.'<cr>", "Format JSON using JQ" },
-	["p"] = { "<cmd>!reorder-python-imports %<cr>", "Reorder python imports" },
-}
-
--- toggle keymappings for venn using <leader>v
-mappings["v"] = {
-	name = "Venn",
-	["v"] = { "<cmd>Toggle_venn()<cr>", "Toggle VENN ASCII Diagrams" },
-}
 
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 -- Telescope select files
-map("n", "<C-p>", "<cmd>Telescope git_files<cr>", opts)
+map("n", "<C-p>", "<cmd>Telescope find_files<cr>", opts)
+map("n", "<C-t>", "<cmd>Telescope toggleterm_manager<cr>", opts)
 -- clear any highlights when <esc> is pressed
 map("n", "<Esc>", ":noh<CR>", opts)
 -- move one up/down display line instead of physicial line
@@ -160,12 +122,12 @@ vim.keymap.set({ "n", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>"
 -- vim.keymap.set({'n', 'x', 'o'}, 'T', '<Plug>(leap-backward-till)')
 
 vim.keymap.set({ "n", "x", "o" }, "s", function()
-	local focusable_windows = vim.tbl_filter(function(win)
-		return vim.api.nvim_win_get_config(win).focusable
-	end, vim.api.nvim_tabpage_list_wins(0))
+  local focusable_windows = vim.tbl_filter(function(win)
+    return vim.api.nvim_win_get_config(win).focusable
+  end, vim.api.nvim_tabpage_list_wins(0))
 
-	require("leap").leap({
-		-- target_windows = require("leap.util").get_enterable_windows(),
-		target_windows = focusable_windows,
-	})
+  require("leap").leap({
+    -- target_windows = require("leap.util").get_enterable_windows(),
+    target_windows = focusable_windows,
+  })
 end)

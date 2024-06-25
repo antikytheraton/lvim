@@ -2,6 +2,8 @@
 #####################################################
 # GLOBAL VARIABLES
 #####################################################
+# set -gx TERM "tmux-256color"
+set -gx TERM "xterm-256color"
 set -gx GOPATH "$HOME/go"
 set -gx GOBIN "$GOPATH/bin"
 set -gx PYENV_ROOT "$HOME/.pyenv"
@@ -16,6 +18,7 @@ set -gx EDITOR "lvim"
 set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set -gx BROWSER /Applications/Firefox.app/Contents/MacOS/firefox
 set -gx GPG_TTY (tty)
+set -gx KUBE_EDITOR "lvim"
 
 set -gx AWS_PROFILE motimatic
 set -gx AWS_DEFAULT_PROFILE default
@@ -24,6 +27,7 @@ set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx NNN_OPENER "$XDG_CONFIG_HOME/nnn/plugins/nuke"
 
 set -gx LANG "en_US.UTF-8"
+set -gx OPENAI_KEY ""
 
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
@@ -31,7 +35,6 @@ set --export PATH $BUN_INSTALL/bin $PATH
 #####################################################
 # PATH
 #####################################################
-fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.npm/bin
 fish_add_path $PYENV_ROOT/bin
@@ -41,26 +44,35 @@ fish_add_path /opt/homebrew/opt/libpq/bin
 fish_add_path /opt/homebrew/opt/ffmpeg@5/bin
 fish_add_path $HOME/.config/emacs/bin
 fish_add_path $HOME/.rd/bin
+fish_add_path /usr/local/bin
+fish_add_path $GOBIN
 
 #####################################################
 # ALIAS
 #####################################################
-alias la='exa -al --color=always --icons --group-directories-first' # my preferred listing
-alias ls='exa -a --color=always --icons --group-directories-first' # all files and dirs
-alias ll='exa -l --color=always --icons --group-directories-first' # long format
-alias lt='exa -aT --color=always --group-directories-first' # tree listing
+alias ls='eza -al --color=always --group-directories-first' # my preferred listing
+alias la='eza -a --icons --color=always --group-directories-first' # all files and dirs
+alias ll='eza -l --color=always --group-directories-first' # long format
+alias lt='eza -aT --color=always --group-directories-first' # tree listing
+alias lh='eza -a | egrep "^\."'
+alias l.='eza -al --color=always --group-directories-first ../' # ls on the PARENT directory
+alias l..='eza -al --color=always --group-directories-first ../../' # ls on directory 2 levels up
+alias l...='eza -al --color=always --group-directories-first ../../../' # ls on directory 3 levels up
+
 
 alias today="date +'%Y_%m_%d'"
 alias clip="pbcopy"
 alias notes='cd ~/.notes && lvim .'
-alias cat='bat -pp --theme="Monokai Extended"'
-alias less='bat --theme="Monokai Extended"'
+alias cat='bat -pp --theme="neofusion"'
+alias less='bat --theme="neofusion"'
 
 alias qr="pbpaste | qrencode -o ~/Desktop/qrcode.png && open ~/Desktop/qrcode.png"
 alias lzd="lazydocker"
 alias gj="git jump"
 
 alias emacs="emacsclient -c -a 'emacs'"
+alias temacs="emacsclient -t -a ''"
+alias em='/opt/homebrew/bin/emacs -nw'
 alias pyink="~/.pyenv/versions/py3nvim/bin/pyink"
 alias rem="killall emacs || killall Emacs-arm64-11 || echo 'Emacs server not running'; /opt/homebrew/bin/emacs --daemon"
 
@@ -74,12 +86,27 @@ alias nf='neofetch'
 alias ff='fastfetch'
 alias pf='pfetch'
 
+# FZF neofusion theme
+set -Ux FZF_DEFAULT_OPTS "\
+--color=bg+:#031B26,bg:#06101e,spinner:#fd5e3a,hl:#e2d9c5 \
+--color=fg:#08435E,header:#e2d9c5,info:#35b5ff,pointer:#fa7a61 \
+--color=marker:#fd5e3a,fg+:#66def9,prompt:#35b5ff,hl+:#fd5e3a"
+
 #####################################################
 # FUNCTIONS
 #####################################################
 function cls
-    clear
-    tmux clear-history
+  clear
+  # if set -q TMUX
+  #    exec tmux clear-history
+  # end
+  tmux clear-history
+end
+
+function geek-tmux-session
+  if not set -q TMUX
+      exec tmux new-session -ADs geek-1
+  end
 end
 
 function env_export --argument filename
@@ -135,8 +162,8 @@ if status is-interactive
     if [ -f "$HOME/google-cloud-sdk/path.fish.inc" ]; . "$HOME/google-cloud-sdk/path.fish.inc"; end
 
     source ~/.asdf/asdf.fish
+    pyenv init - | source
+    starship init fish | source
 end
 
-pyenv init - | source
-starship init fish | source
 

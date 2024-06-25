@@ -11,7 +11,7 @@ local code_actions = require("lvim.lsp.null-ls.code_actions")
 linters.setup({
 	{ exe = "ruff", filetypes = { "python" } },
 	{ exe = "golangci-lint", filetypes = { "go" } },
-	{ name = "codespell" },
+	-- { name = "codespell" },
 	{ name = "terraform_validate" },
 	{ name = "curlylint" },
 	{ name = "shellcheck", args = { "--severity", "info", "-e", "SC2034" } },
@@ -20,7 +20,7 @@ linters.setup({
 
 code_actions.setup({
 	{ name = "proselint" },
-	{ name = "refactoring" },
+	-- { name = "refactoring" },
 })
 
 formatters.setup({
@@ -42,4 +42,5 @@ formatters.setup({
 	{ name = "cmake_format" },
 	{ name = "prettier" },
 	{ name = "beautysh" },
+	{ name = "sqlfmt" },
 })

@@ -2,13 +2,19 @@
 -- Settings
 ------------------------------------------------------
 lvim.leader = ","
-lvim.transparent_window = false
-lvim.colorscheme = "lunar"
--- lvim.colorscheme = "neofusion"
+lvim.transparent_window = true
+-- lvim.colorscheme = "lunar"
+-- lvim.colorscheme = "tokyonight-storm"
+-- lvim.colorscheme = "catppuccin-mocha"
+lvim.colorscheme = "neofusion"
 -- vim.o.background = "dark"
 -- lvim.builtin.lualine.options.theme = require("neofusion.lualine")
 
 lvim.builtin.bufferline.active = false
+-- Folding
+vim.o.foldenable = false
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- Open file at same location where it was opened last time
 vim.cmd(

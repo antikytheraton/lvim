@@ -20,6 +20,15 @@ lvim.plugins = {
 			{ "<c-|>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
 		},
 	},
+	-- git blame
+	{
+		"f-person/git-blame.nvim",
+		event = "BufRead",
+		config = function()
+			vim.cmd("highlight default link gitblame SpecialComment")
+			vim.g.gitblame_enabled = 0
+		end,
+	},
 	-- Surround
 	{
 		"kylechui/nvim-surround",
@@ -45,16 +54,16 @@ lvim.plugins = {
 		end,
 	},
 	-- LSP signature
-	{
-		"ray-x/lsp_signature.nvim",
-		event = "BufRead",
-		config = function()
-			require("lsp_signature").on_attach({
-				floating_window = false,
-				hint_prefix = "🐼 ",
-			})
-		end,
-	},
+	-- {
+	-- 	"ray-x/lsp_signature.nvim",
+	-- 	event = "BufRead",
+	-- 	config = function()
+	-- 		require("lsp_signature").on_attach({
+	-- 			floating_window = false,
+	-- 			hint_prefix = "🐼 ",
+	-- 		})
+	-- 	end,
+	-- },
 	-- Draw ASCII diagrams in nvim
 	{ "jbyuki/venn.nvim" },
 	-- Enhanced movement plugin
@@ -74,13 +83,16 @@ lvim.plugins = {
 		build = ":GoUpdateBinaries",
 	},
 	-- Treesitter complements
-	{ "nvim-treesitter/nvim-treesitter-context" },
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		config = function()
+			require("config.treesitter_context").setup()
+		end,
+	},
 	-- mkdir
 	{ "pbrisbin/vim-mkdir" },
 	-- Wakatime
 	{ "wakatime/vim-wakatime" },
-	-- Diagnostics, references, telescope results, quick fix and location lists
-	-- { "folke/trouble.nvim",            branch = "main", opts = {} },
 	-- Move like a spider
 	{ "chrisgrieser/nvim-spider", lazy = true },
 	-- Jump to the line
@@ -118,6 +130,32 @@ lvim.plugins = {
 			require("config.persistence").setup()
 		end,
 	},
+	-- Trouble
+	{
+		"folke/trouble.nvim",
+		opts = {}, -- for default options, refer to the configuration section for custom setup.
+		cmd = "Trouble",
+	},
+	-- Noice CMD / Notifications / Signatures
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+			"hrsh7th/nvim-cmp",
+		},
+		config = function()
+			require("config.noice").setup()
+		end,
+	},
 	-- Fidget
 	{
 		"j-hui/fidget.nvim",
@@ -133,15 +171,7 @@ lvim.plugins = {
 	{
 		"norcalli/nvim-colorizer.lua",
 		config = function()
-			require("colorizer").setup({ "css", "scss", "html", "javascript", "lua", "python" }, {
-				RGB = true, -- #RGB hex codes
-				RRGGBB = true, -- #RRGGBB hex codes
-				RRGGBBAA = true, -- #RRGGBBAA hex codes
-				rgb_fn = true, -- CSS rgb() and rgba() functions
-				hsl_fn = true, -- CSS hsl() and hsla() functions
-				css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-				css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-			})
+			require("config.colorizer").setup()
 		end,
 	},
 	{
@@ -177,27 +207,28 @@ lvim.plugins = {
 			{ "nvim-telescope/telescope.nvim" },
 		},
 	},
-	-- Trouble
+	-- SQL LSP
+	{ "nanotee/sqls.nvim" },
 	{
-		"folke/trouble.nvim",
-		opts = {}, -- for default options, refer to the configuration section for custom setup.
-		cmd = "Trouble",
+		"vhyrro/luarocks.nvim",
+		priority = 1000, -- We'd like this plugin to load first out of the rest
+		config = true, -- This automatically runs `require("luarocks-nvim").setup()`
 	},
 	-- NOTE:  WINDOWS
 	--------------------------------------------------------------------
-	{
-		"anuvyklack/windows.nvim",
-		dependencies = {
-			"anuvyklack/middleclass",
-			"anuvyklack/animation.nvim",
-		},
-		config = function()
-			vim.o.winwidth = 10
-			vim.o.winminwidth = 10
-			vim.o.equalalways = false
-			require("windows").setup()
-		end,
-	},
+	-- {
+	-- 	"anuvyklack/windows.nvim",
+	-- 	dependencies = {
+	-- 		"anuvyklack/middleclass",
+	-- 		"anuvyklack/animation.nvim",
+	-- 	},
+	-- 	config = function()
+	-- 		vim.o.winwidth = 10
+	-- 		vim.o.winminwidth = 10
+	-- 		vim.o.equalalways = false
+	-- 		require("windows").setup()
+	-- 	end,
+	-- },
 	-- NOTE: THEMES
 	--------------------------------------------------------------------
 	-- { "lunarvim/colorschemes" },
@@ -212,7 +243,35 @@ lvim.plugins = {
 	{ "neanias/everforest-nvim" },
 	{ "rebelot/kanagawa.nvim" },
 	{ "rose-pine/neovim", name = "rose-pine" },
-	{ "diegoulloao/neofusion.nvim" },
+	{
+		"diegoulloao/neofusion.nvim",
+		config = function()
+			lvim.builtin.lualine.options.theme = require("neofusion.lualine")
+		end,
+	},
+	{ "ntk148v/komau.vim" },
+	{
+		"jesseleite/nvim-noirbuddy",
+		dependencies = {
+			{ "tjdevries/colorbuddy.nvim" },
+		},
+		lazy = false,
+		-- priority = 1000,
+		opts = {
+			-- All of your `setup(opts)` will go here
+		},
+		config = function()
+			require("noirbuddy").setup({
+				preset = "minimal",
+				styles = {
+					italic = true,
+					bold = false,
+					underline = false,
+					undercurl = true,
+				},
+			})
+		end,
+	},
 }
 
 ------------------------------------------------------
@@ -221,4 +280,4 @@ lvim.plugins = {
 require("config.big_file")
 require("config.null_ls")
 require("config.telescope")
-require("config.venn")
+require("config.lualine")

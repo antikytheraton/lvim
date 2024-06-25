@@ -1,7 +1,6 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local session_manager = require("wezterm-session-manager/session-manager")
-local neofusion_theme = require("themes/neofusion")
 
 -- wezterm.on("gui-startup", function()
 -- 	local tab, pane, window = mux.spawn_window({})
@@ -153,18 +152,17 @@ config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
 -- Font
 config.font_size = 20.0
 config.font = wezterm.font_with_fallback({
-  -- "Geist Mono VF",
 	"Iosevka NF",
-	"UbuntuMono Nerd Font",
 	"Iosevka Nerd Font", -- __main__ </> WWW
-	"Monaspace Krypton",
-	"Monaspace Xenon",
 	"Monaspace Argon",
 	"Monaspace Neon",
+	"Monaspace Krypton",
+	"Monaspace Xenon",
 	"Monaspace Radon",
 	"JetBrainsMono Nerd Font",
 	"FiraCode Nerd Font",
 	"CaskaydiaCove NF",
+	"UbuntuMono Nerd Font",
 	"CaskaydiaCove Nerd Font",
 	"Mononoki Nerd Font",
 	"MesloLGSDZ Nerd Font",
@@ -177,15 +175,13 @@ config.font = wezterm.font_with_fallback({
 	"Hack Nerd Font",
 	"InconsolataGo NF",
 	"Hurmit Nerd Font",
-	"DejaVuSansM Nerd Font",
 	"IntoneMono Nerd Font",
+	"DejaVuSansM Nerd Font",
 }, {
 	-- weight = "DemiBold",
 	weight = "Regular",
-	-- stretch = "Normal",
+	stretch = "Normal",
 	style = "Normal",
-	-- style = "Medium",
-	-- style = "UltraBlack",
 })
 
 config.font_rules = {
@@ -228,19 +224,16 @@ config.animation_fps = 30
 config.cursor_blink_ease_in = "Constant"
 config.cursor_blink_ease_out = "Constant"
 
-config.colors = neofusion_theme.colors
--- config.color_scheme = neofusion_theme
 -- config.color_scheme = "tokyonight_storm"
--- config.color_scheme = "catppuccin-mocha"
+config.color_scheme = "catppuccin-mocha"
 -- config.color_scheme = "nord"
 -- config.color_scheme = "rose-pine"
 -- config.color_scheme = "Everforest Dark (Gogh)"
 
 -- Window
 config.line_height = 1.0
--- config.window_background_opacity = 1.0
-config.text_background_opacity = 1.0
-config.macos_window_background_blur = 40
+config.window_background_opacity = 0.9
+config.macos_window_background_blur = 50
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE" -- removes close, minimize and so on
 -- config.window_decorations = "RESIZE" -- removes close, minimize and so on
 config.window_close_confirmation = "AlwaysPrompt"
@@ -250,99 +243,6 @@ config.window_padding = {
 	bottom = 0,
 	left = 5,
 }
--- Background Image
--- config.window_background_image = "/Users/aaron.arredondo/Pictures/wallpapers/neofusion-3440x1440.jpeg"
--- config.window_background_image_hsb = {
--- 	-- Darken the background image by reducing it to 1/3rd
--- 	brightness = 0.2,
--- 	-- You can adjust the hue by scaling its value.
--- 	-- a multiplier of 1.0 leaves the value unchanged.
--- 	hue = 1.0,
--- 	-- You can adjust the saturation also.
--- 	saturation = 1.0,
--- }
-
--- Background Images
-local dimmer = { brightness = 0.1 }
-
--- config.enable_scroll_bar = true
--- config.min_scroll_bar_height = '2cell'
--- config.colors = {
--- 	scrollbar_thumb = "white",
--- }
--- config.background = {
--- 	-- This is the deepest/back-most layer. It will be rendered first
--- 	{
--- 		source = {
--- 			File = "/Users/aaron.arredondo/Pictures/wallpapers/Alien/Backgrounds/spaceship_bg_1.png",
--- 		},
--- 		-- The texture tiles vertically but not horizontally.
--- 		-- When we repeat it, mirror it so that it appears "more seamless".
--- 		-- An alternative to this is to set `width = "100%"` and have
--- 		-- it stretch across the display
--- 		repeat_x = "Mirror",
--- 		hsb = dimmer,
--- 		-- When the viewport scrolls, move this layer 10% of the number of
--- 		-- pixels moved by the main viewport. This makes it appear to be
--- 		-- further behind the text.
--- 		attachment = { Parallax = 0.1 },
--- 	},
--- 	-- Subsequent layers are rendered over the top of each other
--- 	{
--- 		source = {
--- 			File = "/Users/aaron.arredondo/Pictures/wallpapers/Alien/Overlays/overlay_1_spines.png",
--- 		},
--- 		width = "100%",
--- 		repeat_x = "NoRepeat",
-
--- 		-- position the spins starting at the bottom, and repeating every
--- 		-- two screens.
--- 		vertical_align = "Bottom",
--- 		repeat_y_size = "200%",
--- 		hsb = dimmer,
-
--- 		-- The parallax factor is higher than the background layer, so this
--- 		-- one will appear to be closer when we scroll
--- 		attachment = { Parallax = 0.2 },
--- 	},
--- 	{
--- 		source = {
--- 			File = "/Users/aaron.arredondo/Pictures/wallpapers/Alien/Overlays/overlay_2_alienball.png",
--- 		},
--- 		width = "100%",
--- 		repeat_x = "NoRepeat",
-
--- 		-- start at 10% of the screen and repeat every 2 screens
--- 		vertical_offset = "10%",
--- 		repeat_y_size = "200%",
--- 		hsb = dimmer,
--- 		attachment = { Parallax = 0.3 },
--- 	},
--- 	{
--- 		source = {
--- 			File = "/Users/aaron.arredondo/Pictures/wallpapers/Alien/Overlays/overlay_3_lobster.png",
--- 		},
--- 		width = "100%",
--- 		repeat_x = "NoRepeat",
-
--- 		vertical_offset = "30%",
--- 		repeat_y_size = "200%",
--- 		hsb = dimmer,
--- 		attachment = { Parallax = 0.4 },
--- 	},
--- 	{
--- 		source = {
--- 			File = "/Users/aaron.arredondo/Pictures/wallpapers/Alien/Overlays/overlay_4_spiderlegs.png",
--- 		},
--- 		width = "100%",
--- 		repeat_x = "NoRepeat",
-
--- 		vertical_offset = "50%",
--- 		repeat_y_size = "150%",
--- 		hsb = dimmer,
--- 		attachment = { Parallax = 0.5 },
--- 	},
--- }
 
 -- make clickable hyperlinks work
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
@@ -378,7 +278,7 @@ config.show_new_tab_button_in_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 config.status_update_interval = 1000
 config.tab_max_width = 60
-config.tab_bar_at_bottom = false
+config.tab_bar_at_bottom = true
 
 -- The filled in variant of the < symbol
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
@@ -454,79 +354,79 @@ end)
 ---------------------------------------------------------------------------------------------
 -- KEYS
 ---------------------------------------------------------------------------------------------
--- config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
--- config.keys = {
--- 	-- Pane Keybindings
--- 	{ key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
--- 	{ key = "|", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
--- 	{ key = "h", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Left") },
--- 	{ key = "l", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Right") },
--- 	{ key = "k", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Up") },
--- 	{ key = "j", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Down") },
--- 	{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
--- 	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
--- 	{ key = "s", mods = "LEADER", action = act.RotatePanes("Clockwise") },
--- 	{ key = "r", mods = "LEADER", action = act.ActivateKeyTable({ name = "resize_pane", one_shot = false }) },
+config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+config.keys = {
+	-- Pane Keybindings
+	{ key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "|", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "h", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Left") },
+	{ key = "l", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Right") },
+	{ key = "k", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Up") },
+	{ key = "j", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Down") },
+	{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
+	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
+	{ key = "s", mods = "LEADER", action = act.RotatePanes("Clockwise") },
+	{ key = "r", mods = "LEADER", action = act.ActivateKeyTable({ name = "resize_pane", one_shot = false }) },
 
--- 	-- Tab Keybindings
--- 	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
--- 	{ key = "RightArrow", mods = "SHIFT", action = act.ActivateTabRelative(1) },
--- 	{ key = "LeftArrow", mods = "SHIFT", action = act.ActivateTabRelative(-1) },
--- 	{ key = "t", mods = "LEADER", action = act.ShowTabNavigator },
--- 	-- { key = "RightArrow", mods = "CTRL|SHIFT", action = act.MoveTabRelative(1) },
--- 	-- { key = "LeftArrow", mods = "CTRL|SHIFT", action = act.MoveTabRelative(-1) },
--- 	{ key = "m", mods = "LEADER", action = act.ActivateKeyTable({ name = "move_tab", one_shot = false }) },
+	-- Tab Keybindings
+	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "RightArrow", mods = "SHIFT", action = act.ActivateTabRelative(1) },
+	{ key = "LeftArrow", mods = "SHIFT", action = act.ActivateTabRelative(-1) },
+	{ key = "t", mods = "LEADER", action = act.ShowTabNavigator },
+	-- { key = "RightArrow", mods = "CTRL|SHIFT", action = act.MoveTabRelative(1) },
+	-- { key = "LeftArrow", mods = "CTRL|SHIFT", action = act.MoveTabRelative(-1) },
+	{ key = "m", mods = "LEADER", action = act.ActivateKeyTable({ name = "move_tab", one_shot = false }) },
 
--- 	-- Workspace
--- 	{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
--- 	{
--- 		key = "W",
--- 		mods = "LEADER",
--- 		action = act.PromptInputLine({
--- 			description = wezterm.format({
--- 				{ Attribute = { Intensity = "Bold" } },
--- 				{ Foreground = { AnsiColor = "Fuchsia" } },
--- 				{ Text = "Enter name for new workspace" },
--- 			}),
--- 			action = wezterm.action_callback(function(window, pane, line)
--- 				-- line will be `nil` if they hit escape without entering anything
--- 				-- An empty string if they just hit enter
--- 				-- Or the actual line of text they wrote
--- 				if line then
--- 					window:perform_action(
--- 						act.SwitchToWorkspace({
--- 							name = line,
--- 						}),
--- 						pane
--- 					)
--- 				end
--- 			end),
--- 		}),
--- 	},
+	-- Workspace
+	{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+	{
+		key = "W",
+		mods = "LEADER",
+		action = act.PromptInputLine({
+			description = wezterm.format({
+				{ Attribute = { Intensity = "Bold" } },
+				{ Foreground = { AnsiColor = "Fuchsia" } },
+				{ Text = "Enter name for new workspace" },
+			}),
+			action = wezterm.action_callback(function(window, pane, line)
+				-- line will be `nil` if they hit escape without entering anything
+				-- An empty string if they just hit enter
+				-- Or the actual line of text they wrote
+				if line then
+					window:perform_action(
+						act.SwitchToWorkspace({
+							name = line,
+						}),
+						pane
+					)
+				end
+			end),
+		}),
+	},
 
--- 	-- Session Manager
--- 	{ key = "S", mods = "LEADER", action = wezterm.action({ EmitEvent = "save_state" }) },
--- 	{ key = "R", mods = "LEADER", action = wezterm.action({ EmitEvent = "restore_state" }) },
--- 	{ key = "L", mods = "LEADER", action = wezterm.action({ EmitEvent = "load_state" }) },
--- }
+	-- Session Manager
+	{ key = "S", mods = "LEADER", action = wezterm.action({ EmitEvent = "save_state" }) },
+	{ key = "R", mods = "LEADER", action = wezterm.action({ EmitEvent = "restore_state" }) },
+	{ key = "L", mods = "LEADER", action = wezterm.action({ EmitEvent = "load_state" }) },
+}
 
--- config.key_tables = {
--- 	resize_pane = {
--- 		{ key = "h", action = act.AdjustPaneSize({ "Left", 1 }) },
--- 		{ key = "j", action = act.AdjustPaneSize({ "Down", 1 }) },
--- 		{ key = "k", action = act.AdjustPaneSize({ "Up", 1 }) },
--- 		{ key = "l", action = act.AdjustPaneSize({ "Right", 1 }) },
--- 		{ key = "Escape", action = "PopKeyTable" },
--- 		{ key = "Enter", action = "PopKeyTable" },
--- 	},
--- 	move_tab = {
--- 		{ key = "h", action = act.MoveTabRelative(-1) },
--- 		{ key = "j", action = act.MoveTabRelative(-1) },
--- 		{ key = "k", action = act.MoveTabRelative(1) },
--- 		{ key = "l", action = act.MoveTabRelative(1) },
--- 		{ key = "Escape", action = "PopKeyTable" },
--- 		{ key = "Enter", action = "PopKeyTable" },
--- 	},
--- }
+config.key_tables = {
+	resize_pane = {
+		{ key = "h", action = act.AdjustPaneSize({ "Left", 1 }) },
+		{ key = "j", action = act.AdjustPaneSize({ "Down", 1 }) },
+		{ key = "k", action = act.AdjustPaneSize({ "Up", 1 }) },
+		{ key = "l", action = act.AdjustPaneSize({ "Right", 1 }) },
+		{ key = "Escape", action = "PopKeyTable" },
+		{ key = "Enter", action = "PopKeyTable" },
+	},
+	move_tab = {
+		{ key = "h", action = act.MoveTabRelative(-1) },
+		{ key = "j", action = act.MoveTabRelative(-1) },
+		{ key = "k", action = act.MoveTabRelative(1) },
+		{ key = "l", action = act.MoveTabRelative(1) },
+		{ key = "Escape", action = "PopKeyTable" },
+		{ key = "Enter", action = "PopKeyTable" },
+	},
+}
 
 return config

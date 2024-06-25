@@ -2,6 +2,7 @@
 -- Keymaps
 ------------------------------------------------------
 lvim.builtin.terminal.open_mapping = [[<c-n>]]
+-- lvim.builtin.terminal.open_mapping = [[<c-^D>]]
 
 local mappings = lvim.builtin.which_key.mappings
 
@@ -11,8 +12,8 @@ mappings["c"] = { "<cmd>Telescope neoclip star<CR>", "Clipboard manager" }
 mappings["k"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 
 -- Telescope
-mappings["s"]["e"] = { "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji', 'kaomoji', 'gitmoji'} }<cr>",
-  "Emoji" }
+mappings["s"]["e"] =
+	{ "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji', 'kaomoji', 'gitmoji'} }<cr>", "Emoji" }
 mappings["s"]["M"] = { "<cmd>Telescope marks<CR>", "Bookmarks" }
 mappings["s"]["o"] = { "<cmd>Telescope oldfiles<CR>", "Old files" }
 mappings["s"]["T"] = { "<cmd>TodoTelescope<CR>", "Find TODO" }
@@ -23,10 +24,10 @@ mappings["l"]["f"] = { "<cmd>lua require('lvim.lsp.utils').format({timeout_ms=20
 
 -- Sessions
 mappings["S"] = {
-  name = "Session",
-  c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
-  l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
-  Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
+	name = "Session",
+	c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+	l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+	Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
 
 -- Gitsigns
@@ -34,19 +35,13 @@ mappings["gS"] = { '<cmd>lua require"gitsigns".stage_buffer()<cr>', "Stage Buffe
 
 -- Misc utils
 mappings["m"] = {
-  name = "Misc",
-  ["t"] = { "<cmd>%s/\\s\\+$//e<cr>", "Delete trailing spaces" },
-  ["d"] = { "<cmd>!dos2unix %<cr>", "Dos 2 Unix" },
-  ["u"] = { "<cmd>!unix2dos %<cr>", "Unix 2 Dos" },
-  ["j"] = { "<cmd>%!jq '.'<cr>", "Format JSON using JQ" },
-  ["p"] = { "<cmd>!reorder-python-imports %<cr>", "Reorder python imports" },
+	name = "Misc",
+	["t"] = { "<cmd>%s/\\s\\+$//e<cr>", "Delete trailing spaces" },
+	["d"] = { "<cmd>!dos2unix %<cr>", "Dos 2 Unix" },
+	["u"] = { "<cmd>!unix2dos %<cr>", "Unix 2 Dos" },
+	["j"] = { "<cmd>%!jq '.'<cr>", "Format JSON using JQ" },
+	["p"] = { "<cmd>!reorder-python-imports %<cr>", "Reorder python imports" },
 }
--- toggle keymappings for venn using <leader>v
-mappings["v"] = {
-  name = "Venn",
-  ["v"] = { "<cmd>Toggle_venn()<cr>", "Toggle VENN ASCII Diagrams" },
-}
-
 -- Trouble
 mappings["x"] = {
 	name = "Trouble",
@@ -62,6 +57,30 @@ mappings["x"] = {
 }
 vim.keymap.set("n", "gR", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
 
+-- toggle keymappings for venn using <leader>v
+-- venn.nvim: enable or disable keymappings
+local ToggleVENN = function()
+	local venn_enabled = vim.inspect(vim.b.venn_enabled)
+	if venn_enabled == "nil" then
+		vim.b.venn_enabled = true
+		vim.cmd([[setlocal ve=all]])
+		-- draw a line on HJKL keystrokes
+		vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", { noremap = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", { noremap = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", { noremap = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", { noremap = true })
+		-- draw a box by pressing "f" with visual selection
+		vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", { noremap = true })
+	else
+		vim.cmd([[setlocal ve=]])
+		vim.cmd([[mapclear <buffer>]])
+		vim.b.venn_enabled = nil
+	end
+end
+mappings["v"] = {
+	name = "Venn",
+	["v"] = { ToggleVENN, "Toggle VENN ASCII Diagrams" },
+}
 
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
@@ -106,6 +125,8 @@ map("n", "mm", "<cmd>MinimapToggle<cr>", opts)
 -- Fix some common typos
 map("c", "Q", "q", opts)
 map("c", "W", "w", opts)
+-- Use Escape on terminal to switch from insert to normal mode
+-- map("t", "<Esc>", "<C-\\><C-n>", opts)
 -- format visual selection
 vim.keymap.set("v", "f", vim.lsp.buf.format)
 -- vim.keymap.set("v", "f", vim.lsp.buf.range_formatting())
@@ -122,12 +143,12 @@ vim.keymap.set({ "n", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>"
 -- vim.keymap.set({'n', 'x', 'o'}, 'T', '<Plug>(leap-backward-till)')
 
 vim.keymap.set({ "n", "x", "o" }, "s", function()
-  local focusable_windows = vim.tbl_filter(function(win)
-    return vim.api.nvim_win_get_config(win).focusable
-  end, vim.api.nvim_tabpage_list_wins(0))
+	local focusable_windows = vim.tbl_filter(function(win)
+		return vim.api.nvim_win_get_config(win).focusable
+	end, vim.api.nvim_tabpage_list_wins(0))
 
-  require("leap").leap({
-    -- target_windows = require("leap.util").get_enterable_windows(),
-    target_windows = focusable_windows,
-  })
+	require("leap").leap({
+		-- target_windows = require("leap.util").get_enterable_windows(),
+		target_windows = focusable_windows,
+	})
 end)

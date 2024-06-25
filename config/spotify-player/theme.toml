@@ -1,0 +1,22 @@
+[[themes]]
+name = "neofusion"
+
+[themes.palette]
+background = "#06101e" # comment for transparent bg
+foreground = "#e2d9c5"
+black = "#06101e"
+red = "#fd5e3a"
+green = "#66def9" # or fd5e3a for orange highlighting
+yellow = "#35b5ff"
+blue = "#22536f"
+magenta = "#fd5e3a"
+cyan = "#66def9"
+white = "#004752"
+bright_black = "#22536f"
+bright_red = "#fd5e3a"
+bright_green = "#35b5ff"
+bright_yellow = "#fd5e3a"
+bright_blue = "#e2d9c5"
+bright_magenta = "#fa7a61"
+bright_cyan = "#e2d9c5"
+bright_white = "#66def9"

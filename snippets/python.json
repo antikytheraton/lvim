@@ -1,7 +1,7 @@
 {
   "ipdb": {
     "prefix": "bb",
-    "body": ["__import__('ipdb').set_trace(context=20) #HACK: breakpoint"],
+    "body": ["__import__(\"ipdb\").set_trace(context=20) #HACK: breakpoint"],
     "description": "add breakpoint"
   },
   "typing": {
@@ -12,11 +12,9 @@
   "celery_sync": {
     "prefix": "celery",
     "body": [
-      "app.conf.update(",
-      "    task_always_eager=True,",
-      "    task_eager_propagates=True,",
-      "    broker_url=\"memory://\",",
-      ")"
+      "task_always_eager=True,",
+      "task_eager_propagates=True,",
+      "broker_url=\"memory://\","
     ],
     "description": "celery sync config"
   }

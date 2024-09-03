@@ -15,16 +15,22 @@ set -gx PAGER "less -rR"
 set -gx LESS "--mouse --wheel-lines=3"
 set -gx VISUAL "lvim"
 set -gx EDITOR "lvim"
-set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set -gx BROWSER /Applications/Firefox.app/Contents/MacOS/firefox
 set -gx GPG_TTY (tty)
 set -gx KUBE_EDITOR "lvim"
+
+### SET MANPAGER
+### Uncomment only one of these!
+set -x MANPAGER "lvim +Man!"
+# set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+# set -x MANPAGER "less"
 
 set -gx AWS_PROFILE motimatic
 set -gx AWS_DEFAULT_PROFILE default
 set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/ruby@3.1/lib/pkgconfig"
 set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx NNN_OPENER "$XDG_CONFIG_HOME/nnn/plugins/nuke"
+set -gx NNN_FIFO '/tmp/nnn.fifo'
 
 set -gx LANG "en_US.UTF-8"
 set -gx OPENAI_KEY ""
@@ -85,6 +91,8 @@ alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/mas
 alias nf='neofetch'
 alias ff='fastfetch'
 alias pf='pfetch'
+alias shark='cd ~/Projects/repos/display3d/ && display3d blahaj.obj -t 0,0,5.5 --shader none --fps 10'
+
 
 # FZF neofusion theme
 set -Ux FZF_DEFAULT_OPTS "\

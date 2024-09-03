@@ -16,6 +16,9 @@ vim.o.foldenable = false
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
+-- relative numbers
+vim.wo.relativenumber = true
+
 -- Open file at same location where it was opened last time
 vim.cmd(
   [[ au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]]

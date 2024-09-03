@@ -1,0 +1,12 @@
+git:
+  paging:
+    colorArg: always
+    # pager: delta --dark --paging=never
+os:
+  editPreset: "lvim"
+  edit: "lvim -- {{filename}}"
+  editAtLine: "lvim +{{line}} -- {{filename}}"
+  editAtLineAndWait: "lvim +{{line}} -- {{filename}}"
+  editInTerminal: true
+  open: "lvim -- {{filename}}"
+  openDirInEditor: "lvim -- {{dir}}"

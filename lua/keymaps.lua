@@ -6,6 +6,9 @@ lvim.builtin.terminal.open_mapping = [[<c-n>]]
 
 local mappings = lvim.builtin.which_key.mappings
 
+-- lvim.builtin.nvimtree.active = false -- NOTE: using neo-tree
+-- mappings["e"] = { "<cmd>NnnPicker %:p:h<cr>", "NNN Explorer" }
+
 mappings["|"] = { "<cmd>vsp<cr>", "Window vertical split" }
 mappings["-"] = { "<cmd>sp<cr>", "Window horizontal split" }
 mappings["c"] = { "<cmd>Telescope neoclip star<CR>", "Clipboard manager" }
@@ -18,6 +21,11 @@ mappings["s"]["M"] = { "<cmd>Telescope marks<CR>", "Bookmarks" }
 mappings["s"]["o"] = { "<cmd>Telescope oldfiles<CR>", "Old files" }
 mappings["s"]["T"] = { "<cmd>TodoTelescope<CR>", "Find TODO" }
 mappings["s"]["w"] = { "<cmd>Telescope grep_string<CR>", "Word under cursor" }
+mappings["s"]["n"] = { "<cmd>NoiceTelescope<CR>", "Show notifications history" }
+mappings["s"]["b"] = {
+	"<cmd>Telescope buffers sort_mru=true ignore_current_buffer=true<CR>",
+	"Search buffers (ignoring current buffer)",
+}
 
 -- custom LSP format
 mappings["l"]["f"] = { "<cmd>lua require('lvim.lsp.utils').format({timeout_ms=2000})<cr>", "Format" }
@@ -59,35 +67,17 @@ vim.keymap.set("n", "gR", "<cmd>Trouble lsp toggle focus=false win.position=righ
 
 -- toggle keymappings for venn using <leader>v
 -- venn.nvim: enable or disable keymappings
-local ToggleVENN = function()
-	local venn_enabled = vim.inspect(vim.b.venn_enabled)
-	if venn_enabled == "nil" then
-		vim.b.venn_enabled = true
-		vim.cmd([[setlocal ve=all]])
-		-- draw a line on HJKL keystrokes
-		vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", { noremap = true })
-		vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", { noremap = true })
-		vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", { noremap = true })
-		vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", { noremap = true })
-		-- draw a box by pressing "f" with visual selection
-		vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", { noremap = true })
-	else
-		vim.cmd([[setlocal ve=]])
-		vim.cmd([[mapclear <buffer>]])
-		vim.b.venn_enabled = nil
-	end
-end
 mappings["v"] = {
 	name = "Venn",
-	["v"] = { ToggleVENN, "Toggle VENN ASCII Diagrams" },
+	["v"] = { "lua require('config.venn').toggle()", "Toggle VENN ASCII Diagrams" },
 }
 
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 -- Telescope select files
-map("n", "<C-p>", "<cmd>Telescope find_files<cr>", opts)
-map("n", "<C-t>", "<cmd>Telescope toggleterm_manager<cr>", opts)
+-- map("n", "<C-p>", "<cmd>Telescope find_files<cr>", opts)
+map("n", "<C-p>", "<cmd>Telescope frecency workspace=CWD path_display={'shorten'}<cr>", opts)
 -- clear any highlights when <esc> is pressed
 map("n", "<Esc>", ":noh<CR>", opts)
 -- move one up/down display line instead of physicial line

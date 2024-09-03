@@ -20,15 +20,29 @@ lvim.plugins = {
 			{ "<c-|>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
 		},
 	},
+	-- NNN Explorer
+	-- {
+	-- 	"luukvbaal/nnn.nvim",
+	-- 	config = function()
+	-- 		-- require("nnn").setup()
+	-- 		-- require("config.nnn").setup()
+	-- 	end,
+	-- },
 	-- git blame
 	{
 		"f-person/git-blame.nvim",
 		event = "BufRead",
 		config = function()
 			vim.cmd("highlight default link gitblame SpecialComment")
-			vim.g.gitblame_enabled = 0
+			require("gitblame").setup({ enabled = true })
 		end,
 	},
+	-- {
+	-- 	"lewis6991/gitsigns.nvim",
+	-- 	config = function()
+	-- 		require("gitsigns").setup()
+	-- 	end,
+	-- },
 	-- Surround
 	{
 		"kylechui/nvim-surround",
@@ -81,6 +95,16 @@ lvim.plugins = {
 	{
 		"fatih/vim-go",
 		build = ":GoUpdateBinaries",
+	},
+	-- Tabnine
+	{
+		"tzachar/cmp-tabnine",
+		build = "./install.sh",
+		dependencies = "hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		config = function()
+			require("config.tabnine").prefetch()
+		end,
 	},
 	-- Treesitter complements
 	{
@@ -174,18 +198,8 @@ lvim.plugins = {
 			require("config.colorizer").setup()
 		end,
 	},
-	{
-		"ryanmsnyder/toggleterm-manager.nvim",
-		dependencies = {
-			"akinsho/nvim-toggleterm.lua",
-			"nvim-telescope/telescope.nvim",
-			"nvim-lua/plenary.nvim", -- only needed because it's a dependency of telescope
-		},
-		config = function()
-			require("config.term_manager").setup()
-		end,
-	},
 	-- telescope extensions
+	{ "nvim-telescope/telescope-frecency.nvim" },
 	{
 		"AckslD/nvim-neoclip.lua",
 		dependencies = {
@@ -199,79 +213,62 @@ lvim.plugins = {
 	{
 		"nvim-telescope/telescope-symbols.nvim",
 	},
-	{
-		"nvim-telescope/telescope-media-files.nvim",
-		dependencies = {
-			{ "nvim-lua/popup.nvim" },
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope.nvim" },
-		},
-	},
+	-- {
+	-- 	"nvim-telescope/telescope-media-files.nvim",
+	-- 	dependencies = {
+	-- 		{ "nvim-lua/popup.nvim" },
+	-- 		{ "nvim-lua/plenary.nvim" },
+	-- 		{ "nvim-telescope/telescope.nvim" },
+	-- 	},
+	-- },
 	-- SQL LSP
 	{ "nanotee/sqls.nvim" },
-	{
-		"vhyrro/luarocks.nvim",
-		priority = 1000, -- We'd like this plugin to load first out of the rest
-		config = true, -- This automatically runs `require("luarocks-nvim").setup()`
-	},
-	-- NOTE:  WINDOWS
-	--------------------------------------------------------------------
-	-- {
-	-- 	"anuvyklack/windows.nvim",
-	-- 	dependencies = {
-	-- 		"anuvyklack/middleclass",
-	-- 		"anuvyklack/animation.nvim",
-	-- 	},
-	-- 	config = function()
-	-- 		vim.o.winwidth = 10
-	-- 		vim.o.winminwidth = 10
-	-- 		vim.o.equalalways = false
-	-- 		require("windows").setup()
-	-- 	end,
-	-- },
+	-- Async run
+	{ "skywind3000/asyncrun.vim" },
+	{ "benmills/vimux" },
 	-- NOTE: THEMES
 	--------------------------------------------------------------------
-	-- { "lunarvim/colorschemes" },
-	{ "catppuccin/nvim", name = "catppuccin" },
-	{ "folke/tokyonight.nvim", lazy = false, opts = {} },
-	{ "EdenEast/nightfox.nvim" },
-	{ "ellisonleao/gruvbox.nvim" },
-	{ "NTBBloodbath/doom-one.nvim" },
-	{ "NLKNguyen/papercolor-theme" },
-	{ "ayu-theme/ayu-vim" },
-	{ "cocopon/iceberg.vim" },
-	{ "neanias/everforest-nvim" },
-	{ "rebelot/kanagawa.nvim" },
-	{ "rose-pine/neovim", name = "rose-pine" },
 	{
 		"diegoulloao/neofusion.nvim",
 		config = function()
-			lvim.builtin.lualine.options.theme = require("neofusion.lualine")
+			require("config.neofusion").setup()
 		end,
 	},
-	{ "ntk148v/komau.vim" },
-	{
-		"jesseleite/nvim-noirbuddy",
-		dependencies = {
-			{ "tjdevries/colorbuddy.nvim" },
-		},
-		lazy = false,
-		-- priority = 1000,
-		opts = {
-			-- All of your `setup(opts)` will go here
-		},
-		config = function()
-			require("noirbuddy").setup({
-				preset = "minimal",
-				styles = {
-					italic = true,
-					bold = false,
-					underline = false,
-					undercurl = true,
-				},
-			})
-		end,
-	},
+	-- { "lunarvim/colorschemes" },
+	-- { "catppuccin/nvim", name = "catppuccin" },
+	-- { "folke/tokyonight.nvim", lazy = false, opts = {} },
+	-- { "EdenEast/nightfox.nvim" },
+	-- { "ellisonleao/gruvbox.nvim" },
+	-- { "NTBBloodbath/doom-one.nvim" },
+	-- { "NLKNguyen/papercolor-theme" },
+	-- { "ayu-theme/ayu-vim" },
+	-- { "cocopon/iceberg.vim" },
+	-- { "neanias/everforest-nvim" },
+	-- { "rebelot/kanagawa.nvim" },
+	-- { "rose-pine/neovim", name = "rose-pine" },
+	-- { "ntk148v/komau.vim" },
+	-- {
+	-- 	"jesseleite/nvim-noirbuddy",
+	-- 	dependencies = {
+	-- 		{ "tjdevries/colorbuddy.nvim" },
+	-- 	},
+	-- 	lazy = false,
+	-- 	-- priority = 1000,
+	-- 	opts = {
+	-- 		-- All of your `setup(opts)` will go here
+	-- 	},
+	-- 	config = function()
+	-- 		require("noirbuddy").setup({
+	-- 			preset = "minimal",
+	-- 			styles = {
+	-- 				italic = true,
+	-- 				bold = false,
+	-- 				underline = false,
+	-- 				undercurl = true,
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 }
 
 ------------------------------------------------------
@@ -281,3 +278,4 @@ require("config.big_file")
 require("config.null_ls")
 require("config.telescope")
 require("config.lualine")
+require("config.nvim_tree")

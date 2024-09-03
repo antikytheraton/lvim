@@ -29,7 +29,7 @@ formatters.setup({
 	-- { exe = "black", filetypes = { "python" } },
 	-- { exe = "blue", filetypes = { "python" } },
 	{ exe = "pyink", filetypes = { "python" } },
-	-- { exe = "ruff", filetypes = { "python" } },
+	{ exe = "ruff", filetypes = { "python" } },
 	-- { exe = "isort", filetypes = { "python" } },
 	{ exe = "reorder_python_imports", filetypes = { "python" } },
 	{ exe = "djlint", filetypes = { "django", "jinja.html", "htmldjango", "djhtml" } },
